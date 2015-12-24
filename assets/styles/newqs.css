@@ -1,0 +1,65 @@
+.zon_v2{
+    height: 100%;
+    width: 100%;
+}
+div {
+    display: block;
+}
+ul, ol, li {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+
+.left_nav{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 75px;
+    height: 100%;
+    z-index: 900;
+    background-color: #2f322a;
+}
+.BackPre{
+    height: 70px;
+    text-align: center;
+}
+.left_nav .BackPre span{
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+}
+
+.left_nav .left_Menu li {
+    height: 70px;
+    text-align: center;
+    color: #BABBBD;
+}
+.left_nav .left_Menu li a {
+    color: #A2A3A5;
+    padding: 5px 0;
+    height: 60px;
+    font-size: 12px;
+    display: block;
+}
+
+.left_nav .left_Menu li span{
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    font-size: medium;
+}
+#submit_id{
+    position: fixed;
+    right: 70px;
+    top: 70px;
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title><%=data.paperTitle%></title>
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="/js/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background-color: #efefef;
+		}
+		ul,li{list-style:none;}
+		.TopBgTile{
+			background-color: #85c8ff;
+			padding: 10px 0pc;
+    		width: 100%;
+
+		}
+		.title{
+			text-align: center;
+		}
+		.content{
+			padding: 10px 10px;
+    		width: 100%;
+		}
+		.radio{
+			margin: 0px;
+		}
+
+		.topic_title{ font-size:16px; margin:0 0 8px 0; }
+	 	.unstyled{ margin:5px 0 5px 0; padding:0; border: 1px solid #d5d5d5; border-radius: 3px; }
+	 	.unstyled li{ border-color:#fff; background:#fff; font-size:16px; min-height:41px; border-bottom: 1px solid #ebebeb; }
+	 	.unstyled li:first-child{ border-radius:4px 4px 0 0; }
+	 	.unstyled li:last-child{ border-radius:0 0 4px 4px; border-bottom:0px solid #fff!important; }
+	 	.unstyled label { display:block; padding:13px 10px 9px 0; margin-left:40px; }
+
+	 	.sub_btn{
+	 		width: 100%;
+	 	}
+
+	</style>
+	<div class="TopBgTile">
+		<input type="hidden" id="paperId" value="<%=data.paperId%>">
+		<input type="hidden" id="userAccount" value="<%=data.userAccount%>">
+		<input type="hidden" id="taskNo" value="<%=data.taskNo%>">
+
+		<div class="title"><%=data.paperTitle%></div>
+	</div> 
+	<div class="content">
+		<div class="project_title">
+			<p><%=data.desc%></p>
+		</div>
+		<% var question = data.questionList%>
+
+		<% for(var i =0,j=0 ;i< question.length;i++){ %>
+		<div class='question'>
+			<%if(question[i].type == '1'){%>
+			<div class="topic_title">
+				Q<%= j+1 %>. <%= question[i].title %>
+				<% j++%>
+			</div>
+			<div class="topic_con radio_wrap" data-questionId ="<%=question[i].questionId%>" >
+				<ul class="unstyled">
+					<%for(var w = 0;w<question[i].option.length;w++){%>
+					<div class="radio">
+						<label>
+							<input type="radio" name="<%=question[i].questionId%>"  value="<%=question[i].option[w].value%>" data-location="<%=question[i].option[w].location%>">
+							<%= question[i].option[w].text%>
+						</label>
+					</div>
+					<%}%>
+				</ul>
+			</div>
+				<% }else{%>
+			<div class="topic_title">
+				 <%= question[i].title %>
+			</div>
+			<% } %>
+		</div>
+		<% } %>
+		<div class="btn btn-info sub_btn">提交答卷</div>
+	</div>
+
+
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="/js/jquery/dist/jquery.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="/js/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/js/submit.js"></script>
+
+</body>
+</html>

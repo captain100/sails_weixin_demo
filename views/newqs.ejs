@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>新建试卷</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/styles/newqs.css">
+    <script src="/js/main.js"></script>
+
+
+</head>
+<body>
+<dov class="zon_v2">
+    <div class="left_nav">
+        <a href="/list" class="BackPre"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <ul class="left_Menu">
+            <li class="hdgc_False"><a class="active" href="/edit" onclick="project_design_confirm();return false;"><span class="glyphicon glyphicon-edi"></span>编辑问卷</a></li>
+            <li class="hdgc_False"><a href="/collect"><span class="glyphicon glyphicon-edi"></span>收集数据</a></li>
+            <li><a href="/report"><span class="glyphicon glyphicon-edi"></span>分析结果</a></li>
+        </ul>
+
+
+    </div>
+    <div class="wjcontent">
+        <div class="panel panel-default">
+            <div class="panel-body ">
+                <div class="form-group col-md-offset-2 col-md-8">
+                    <label class="control-label" for="inputQuetitle">Input with title </label>
+                    <input type="text" class="form-control" id="inputQuetitle">
+                </div>
+
+                <div class="form-group col-md-offset-2 col-md-8">
+                    <label class="control-label" for="inputQueDet">Input detailed introduction </label>
+                    <input type="text" class="form-control" id="inputQueDet">
+                </div>
+                <div class="form-group col-md-offset-2 col-md-8" id="questions">
+                    <div class="btn btn-primary addQuestion col-md-6">添加问题</div>
+                    <div class="btn btn-info addDescription col-md-6">添加描述</div>
+                </div>
+                <div class="btn btn-success btn_submit" id="submit_id">提交问卷</div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</dov>
+
+</body>
+</html>

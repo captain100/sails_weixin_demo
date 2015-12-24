@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>新建试卷</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/styles/newqs.css">
+
+</head>
+<body>
+<dov class="zon_v2">
+    <div class="left_nav">
+        <a href="/list" class="BackPre"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <ul class="left_Menu">
+            <li class="hdgc_False"><a class="active" href="/edit" onclick="project_design_confirm();return false;"><span
+                            class="glyphicon glyphicon-edi"></span>编辑问卷</a></li>
+            <li class="hdgc_False"><a href="/collect"><span class="glyphicon glyphicon-edi"></span>收集数据</a></li>
+            <li><a href="/report"><span class="glyphicon glyphicon-edi"></span>分析结果</a></li>
+        </ul>
+
+
+    </div>
+    <div class="wjcontent">
+        <div class="col-md-offset-4 col-md-6">
+            paperId:<input type="text" value="<%= data.paperId %>" disabled>
+            <br>
+            paperTitle:<input type="text" value="<%= data.paperTitle %>" disabled>
+            <br>
+            desc:<input type="text" value="<%= data.desc %>" disabled>
+            <br>
+            createTime:<input type="text" value="<%= data.createTime %>" disabled>
+            <br>
+            <% for(var i = 0, j = 0 ; i < data.questionList.length;i++){ %>
+            <% if(data.questionList[i].type == '1'){ %>
+            Q<%= j+1 %> <%= data.questionList[i].title %><br>
+            <% j++ %>
+            <% var options = data.questionList[i].option %>
+            <% for(var w =0;w<options.length;w++){%>
+            <input type="radio" value="<%= options[w].text%>"><%= options[w].text%>
+            <input type="text" value="<%=options[w].value %>" disabled>
+            <br>
+            <%}%>
+            <% }else{ %>
+            <%= data.questionList[i].title %>
+            <% } %>
+            <% } %>
+        </div>
+
+
+    </div>
+</dov>
+
+
+</body>
+</html>

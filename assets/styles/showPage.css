@@ -1,0 +1,111 @@
+h1,h3,p{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+a:hover{
+    text-decoration: none;
+}
+.side-nav{
+    position: fixed;
+    top: 45%;
+    right: 20px;
+    z-index: 9;
+}
+.side-nav ul.nav-side-nav{
+    text-align: center;
+    list-style: none;
+    margin: 0px;
+    padding-left: 0px;
+}
+.side-nav ul.nav-side-nav >li{
+    display: block;
+    line-height: 1.54em;
+    margin: 0px;
+    padding: 8px 0px;
+}
+.side-nav ul.nav-side-nav >li >a{
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+
+
+
+.pageOne{
+    height: 750px;
+}
+.onepage-bg{
+    height: 800px;
+    width: 100%;
+    position: absolute;
+    background-position: center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    background-image: url("/images/index1.jpg");
+
+}
+.container h1{
+    margin-top: 260px;
+    text-align: center;
+    color: #fff;
+    line-height: 1.5em ;
+    font-weight: 100;
+    font-size: 5em;
+}
+.container h3{
+    margin-top: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 2em;
+    line-height: 0.5em;
+
+}
+.container p{
+    text-align: center;
+    color: #fff;
+    letter-spacing: 3px;
+}
+
+.pageTwo{
+    height: 750px;
+}
+.twopage-bg{
+    height: 800px;
+    width: 100%;
+    position: absolute;
+    background-position: center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    background-image: url("/images/index2.jpg");
+
+}.pageThree{
+    height: 750px;
+}
+.threepage-bg{
+    height: 800px;
+    width: 100%;
+    position: absolute;
+    background-position: center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    background-image: url("/images/index3.jpg");
+
+}
+.pageFour{
+    height: 750px;
+}
+.fourpage-bg{
+    height: 800px;
+    width: 100%;
+    position: absolute;
+    background-position: center center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    background-image: url("/images/index4.jpg");
+
+}
+.container .btn{
+    margin: auto auto;
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>今日任务</title>
+
+
+    <link rel="stylesheet" href="/js/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/schedule.css"/>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="/js/jquery/dist/jquery.min.js"></script>
+    <script src="/js/schedule.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<% var list = data.listCount %>
+
+<section class="my_info_header">
+    <img src="images/userInfoBackground_2.jpg" class="blur">
+    <div class="my_user">
+        <b id="userImg" style="position: relative;">
+            <div class="image-box">
+                <img src="<%=user.headimgurl%>" style="opacity: 1; left: 0px; right: 0px; top: 0px; height: 95px;">
+            </div>
+        </b>
+        <div class="userName">
+            <%=user.nickname%>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <% for(var i = 0 ; i < list.length; i++){ %>
+    <div class="panel panel-default">
+        <div class="panel-heading shijian" role="tab" data-href="#collapse<%= i %>" id="heading<%= i %>">
+            <h4 class="panel-title" >
+                <a role="button" data-toggle="collapse" data-parent="#accordion"
+                   aria-expanded="false" aria-controls="collapse<%= i %>">
+                    <%= list[i].chTitle %>
+                </a>
+            </h4>
+            <% if(!list[i].isDone) {%>
+            <span style="color: #f19b2a">待做</span>
+            <%}else{%>
+            <span style="color:#9cf166">完成</span>
+            <%}%>
+        </div>
+        <div id="collapse<%= i %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= i %>">
+            <div class="panel-body">
+
+                <section>
+                  <p><%= list[i].chDesc %></p>
+                </section>
+                
+                
+                <br>
+                <% if (list[i].type == 'alert' && !list[i].isDone ){ %>
+                <div class="action-controller ">
+                    <a href="/updateStatus?taskNo=<%=list[i].taskNo%>&userAccount=<%=data.userAccount%>&projectUniqNo=<%=data.projectUniqNo%>&scheduleCount=<%=data.scheduleCount%>" class="btn btn-success updateType  col-xs-12 ">完成</a>
+                </div>
+                <% } %>
+                <% if (list[i].type == 'question'){ %>
+                <div class="col-xs-12">
+                    <img src="images/20150717105532182.jpg" style= "width:100%;">
+                </div>
+                <div class="col-xs-12">
+                    <p><br></p>
+                </div>
+
+               <%if(!list[i].isDone){%>
+
+                <div class="action-controller">
+                    <a href="<%= list[i].url %>" class="btn btn-primary col-xs-12">进行问卷调查</a>
+                </div>
+                <% }} %>
+
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+</div>
+
+</body>
+</html>

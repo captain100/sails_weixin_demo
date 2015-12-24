@@ -1,0 +1,146 @@
+
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+
+
+.list_head {
+    height: 71px;
+    background: #484848;
+    position: relative;
+    padding: 0 0px;
+}
+.list_head h1{
+    margin: 0px;
+}
+.list_head h1 a{
+    color: #fff;
+    height: 71px;
+    line-height: 71px;
+    position: absolute;
+    left: 5%;
+    top: 0px;
+    width: 100px;
+    text-align: center;
+}
+.list_head .list_nav {
+    height: 71px;
+    line-height: 71px;
+    position: absolute;
+    left: 50%;
+    margin-left: -220px;
+    top: 0px;
+    width: 440px;
+    text-align: center;
+}
+.list_head .list_nav a {
+    color: #fff;
+    display: inline-block;
+    font-size: 16px;
+    float: left;
+    width: 110px;
+    text-align: center;
+}
+.list_head .list_nav a:hover{
+        background-color: #565656;
+}
+.util-nav {
+    color: #dbdbdb;
+    float: right;
+    list-style: none;
+    margin: 0;
+}
+.util-nav li {
+    float: left;
+    line-height: 21px;
+    overflow: hidden;
+    display: inline;
+    padding: 25px 10px 0 0;
+}
+.util-nav .username a {
+    display: block;
+    color: azure;
+}
+.list_cont {
+    margin: 50px 0px;
+    padding: 20px 0px;
+    padding-bottom: 10px;
+    display: inline;
+
+}
+.list_check {
+    height: 30px;
+    line-height: 30px;
+    padding-top: 12px;
+    position: relative;
+    display: inline;
+}
+.list_sear{
+    display: inline;
+    float: right;
+    width: 281px;
+    height: 28px;
+    overflow: hidden;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background: #fff
+
+}
+.list_sear .txt {
+    padding: 5px 10px;
+    float: left;
+    width: 233px;
+    font-family: \5FAE\8F6F\96C5\9ED1;
+    font-size: 12px;
+    color: #999;
+    height: 18px;
+    border: none;
+    line-height: 18px;
+}
+.list_sear .btn {
+    width: 18px;
+    height: 18px;
+    float: right;
+    margin-right: 10px;
+    margin-top: 5px;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+}
+.list_nr{
+    display: inline;
+    margin-top: 40px;
+
+}
+.panel .create{
+    width: 260px;
+    height: 134px;
+    border: none;
+}
+.panel ul li{
+    position: relative;
+    width: 258px;
+    height: 128px;
+    border: 1px solid #e9e9e9;
+    background: #fff;
+    float: left;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 0px 6px #dcdcdc;
+    margin-left: 20px;
+    padding: 15px;
+    margin-top: 20px;
+    /*behavior: url(/static/css/PIE.htc);*/
+}
+.panel ul li a{
+    display: block;
+    height: 160px;
+    font-size: 30px;
+    letter-spacing: 3px;
+    line-height: 100px;
+    padding-left: 80px;
+}
+
