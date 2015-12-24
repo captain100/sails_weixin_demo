@@ -1,4 +1,5 @@
 var wechat = require('wechat');
+var request = require('request');
 var wechat_config = {
     token: 'testnewqiushi',//开发者 token
     appid: 'wxb4fb29266130bb85',// appid
@@ -6,7 +7,8 @@ var wechat_config = {
 };
 
 module.exports = {
-    wechat: function () {
+    wechat: function (req, res) {
+        console.log(33333);
         wechat(wechat_config, function (req, res, next) {
             console.log(11111111111)
             // 微信输入信息都在req.weixin上
@@ -28,8 +30,6 @@ module.exports = {
                     type: 'text'
                 });
             }
-        })
-
+        })(req,res);
     }
-
 }
