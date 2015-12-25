@@ -33,9 +33,9 @@ module.exports.routes = {
     'post /template/:openid':'SystemController.pushTemplateMSG',
     'get /createTask':'SystemController.createTask',
     'get /schedule':'SystemController.getSchedule',
-    'get /updateStatus':'SystemController.changeActionStatus'
+    'get /updateStatus':'SystemController.changeActionStatus',
     //wechatController
-    // 'post /wechat':'WeChatController.wechat'
+    'all /wechat':'WeChatController.wechat'
     
     
   
