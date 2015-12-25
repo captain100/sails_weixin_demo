@@ -35,7 +35,7 @@ module.exports.routes = {
     'get /schedule':'SystemController.getSchedule',
     'get /updateStatus':'SystemController.changeActionStatus',
     //wechatController
-    '/wechat':'WeChatController.wechat'
+    'post /wechat':'WeChatController.wechat'
     
     
   
