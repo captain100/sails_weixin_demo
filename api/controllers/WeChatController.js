@@ -7,7 +7,7 @@ var wechat_config = {
 };
 
 module.exports = {
-    'wechat': function (req, res) {
+    'wechat': function (requ, respon) {
         console.log('------------------')
         wechat(wechat_config, function (req, res, next) {
             console.log(11111111111)
@@ -31,7 +31,7 @@ module.exports = {
                     type: 'text'
                 });
             }
-        })(req, res);
+        })(requ, respon);
     }
 
 }
