@@ -31,9 +31,7 @@ module.exports = {
                     type: 'text'
                 });
             }
-        })(req, res, function(){
-            console.log('3333')
-        });
+        })(req, res, next);
     }
 
 }
