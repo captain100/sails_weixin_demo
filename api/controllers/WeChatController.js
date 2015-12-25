@@ -9,7 +9,6 @@ var wechat_config = {
 module.exports = {
     'wechat': function (req, res, next) {
         console.log('------------------')
-        console.log(req);
         wechat(wechat_config, function (req, res, next) {
             console.log(11111111111)
             // 微信输入信息都在req.weixin上
@@ -32,7 +31,9 @@ module.exports = {
                     type: 'text'
                 });
             }
-        })(req, res, next);
+        })(req, res, function(){
+            console.log('3333')
+        });
     }
 
 }
