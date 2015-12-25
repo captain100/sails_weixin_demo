@@ -62,7 +62,7 @@ module.exports.policies = {
 
         // Prevent end users from doing CRUD operations on products reserved for admins
         // (uses HTTP basic auth)
-        '/wechat': wechat(wechat_config, function (req, res, next) {
+        '*': wechat(wechat_config, function (req, res, next) {
             console.log(11111111111)
             // 微信输入信息都在req.weixin上
             var message = req.weixin;
