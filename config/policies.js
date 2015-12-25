@@ -74,8 +74,9 @@ module.exports.policies = {
             } else if (message.Event === 'CLICK' && message.EventKey === 'CREAT_TASK_1') {
                 var openid = message.FromUserName;
                 request('http://www.cpzero.cn/createTask?openid=' + openid, function (error, response, info) {
-                    next();
+                    
                 })
+                next();
 
             } else {
                 res.reply({

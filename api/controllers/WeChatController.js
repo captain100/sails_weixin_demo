@@ -1,6 +1,7 @@
 module.exports = {
     'wechat':function(req,res){
-        console.log(333333)
+        console.log('------------------')
+        console.log(req);
     }
 
 }
