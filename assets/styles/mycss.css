@@ -118,8 +118,18 @@ a:hover{
 .panel .create{
     width: 260px;
     height: 134px;
-    border: none;
+    border: 4px dotted rgba(25,25,25,.2);
 }
+
+.panel .questionTag{
+    width: 260px;
+    height: 134px;
+    border-top: 5px solid #53a4f4;
+    
+    /*border: none;*/
+}
+
+
 .panel ul li{
     position: relative;
     width: 258px;
@@ -135,12 +145,22 @@ a:hover{
     margin-top: 20px;
     /*behavior: url(/static/css/PIE.htc);*/
 }
-.panel ul li a{
+.panel ul .create a{
     display: block;
     height: 160px;
     font-size: 30px;
     letter-spacing: 3px;
     line-height: 100px;
-    padding-left: 80px;
+    padding-left: 30px;
+    overflow: hidden;
+}
+
+.panel ul .questionTag a{
+    display: inline-block;
+    height: 160px;
+    font-size: 18px;
+    line-height: 18px;
+    padding-left: 10px;
+    overflow: hidden;
 }
 

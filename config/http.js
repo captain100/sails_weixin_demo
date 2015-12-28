@@ -8,7 +8,6 @@
  * For more information on configuration, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.http.html
  */
-var express = require('express');
 module.exports.http = {
 
     /****************************************************************************
@@ -29,9 +28,13 @@ module.exports.http = {
         * router is invoked by the "router" middleware below.)                     *
         *                                                                          *
         ***************************************************************************/
-        query: express.query(),
+        // query: express.query(),
+        // bodyParser: require('body-parser'),
+        // startRequestTimer: function (req, res, next) {
+        //     console.log('startRequestTimer :' + new Date());
+        //     return next();
+        // },
         order: [
-            'query',
             'startRequestTimer',
             'cookieParser',
             'session',
@@ -48,6 +51,7 @@ module.exports.http = {
             '404',
             '500'
         ],
+        
 
         /****************************************************************************
         *                                                                           *

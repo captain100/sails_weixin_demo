@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>问卷列表页</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/mycss.css">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <!--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
+
+
+
+
+</head>
+
+<body>
+
+    <div class="list_head">
+        <h1><a href="/">Administrator</a></h1>
+
+        <div class="list_nav">
+            <a href="/project">项目管理</a>
+            <a href="/list">问卷题库</a>
+            <a href="/">帮助</a>
+            <a href="/">互动工厂</a>
+        </div>
+        <div class="list_men">
+            <ul class="util-nav">
+                <li class="userMsg">
+                    <a class="wjNews" href="/message/list"></a>
+                </li>
+                <li class="username">
+                    <a href="javascript:;" title="90后爱国">90后爱国</a>
+
+                    <div class="arrowup">
+                        <div class="arrowupt"></div>
+                    </div>
+                    <div class="loginMeun" style="display: none;">
+                        <div class="opacityDIV"></div>
+                        <div class="loginMenu_n">
+                            <ul class="UserMenu">
+
+                                <li><a href="/member">我的账户</a></li>
+
+                                <li><a href="/member/mywallet">我的钱包</a></li>
+                                <li><a href="/contact/list/all?zoom_model=normal">联系人</a></li>
+
+                                <li class="bbnot"><a href="/logout">退出</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="list_cont">
+        <div class="list_check row">
+            <div class="list_tab">
+            </div>
+            <div class="list_sel">
+
+            </div>
+            <div class="list_sear">
+                <input type="text" id="search_txt" class="txt" value="输入标题搜索">
+                <input type="button" value="" id="search_btn" class="btn">
+
+            </div>
+        </div>
+
+        <div class="list_nr row">
+            <!--<div class="listBox">
+
+
+        </div>-->
+            <!--<div class="panel panel-default">
+            <div class="panel-body">
+                <ul>
+                    <li class="create">
+                        <a href="/new">
+                            新建问卷
+                        </a>
+                    </li>
+
+                    <% for(var i = 0;i < list.length;i++){ %>
+                    <li class="create" >
+                        <a href="/getQuestion?paperId=<%= list[i].paperId %>">
+                            <%= list[i].projectName %>
+                        </a>
+                    </li>
+                    <% } %>
+
+                </ul>
+            </div>
+
+
+        </div>-->
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="/createProject">
+                         创建新的project
+                    </a>
+                    
+                </li>
+                
+                <% for(var i = 0;i < list.length;i++){ %>
+                    <li class="list-group-item">
+                        <a href="#">
+                            <div class="">
+                                <%=list[i].projectNo%>|
+                                    <%= list[i].projectName %>|
+                                        <%=list[i].updateTime%>
+                            </div>
+                        </a>
+                    </li>
+                    <% } %>
+            </ul>
+
+
+        </div>
+    </div>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script rel="script" src="/js/list.js"></script>
+</body>
+
+</html>

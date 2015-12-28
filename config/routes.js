@@ -22,7 +22,7 @@
 
 module.exports.routes = {
     //SystemController
-    'get /': 'SystemController.showExpress',
+    'all /': 'SystemController.showExpress',
     'get /heartqOl': 'SystemController.heartqOl',
     'get /subPaper': 'SystemController.submitQuestion',
     'get /admin': 'SystemController.showAdmin',
@@ -35,7 +35,9 @@ module.exports.routes = {
     'get /schedule':'SystemController.getSchedule',
     'get /updateStatus':'SystemController.changeActionStatus',
     //wechatController
-    'all /wechat':'WeChatController.wechat'
+    'all /wechat':'WeChatController.wechat',
+    'get /project':'SystemController.findAllProject',
+    'get /createProject':'SystemController.createProject'
     
     
   

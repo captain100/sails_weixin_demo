@@ -39,8 +39,8 @@
     <h1><a href="/">Administrator</a></h1>
 
     <div class="list_nav">
-        <a href="/mylist">我的</a>
-        <a href="/model">模版库</a>
+        <a href="/project">项目管理</a>
+        <a href="/list">问卷题库</a>
         <a href="/">帮助</a>
         <a href="/">互动工厂</a>
     </div>
@@ -98,13 +98,16 @@
                 <ul>
                     <li class="create">
                         <a href="/new">
+                        <span class="glyphicon glyphicon-plus"></span>
                             新建问卷
                         </a>
                     </li>
 
                     <% for(var i = 0;i < list.length;i++){ %>
-                    <li class="create" >
+                    <li class="questionTag" >
+                        
                         <a href="/getQuestion?paperId=<%= list[i].paperId %>">
+                            <span class="glyphicon glyphicon-paperclip"></span>
                             <%= list[i].paperTitle %>
                         </a>
                     </li>

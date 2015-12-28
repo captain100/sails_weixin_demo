@@ -81,6 +81,11 @@ $(function () {
             self.location = '/list';
         })
     })
+    
+    $('.addAction').click(function(){
+        $('data-action-list').
+         
+    });
 
 
 });
