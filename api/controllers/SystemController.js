@@ -7,7 +7,7 @@ var api = '';
 module.exports = {
     //访问网站首页
     showExpress: function (req, res) {
-        
+
         console.log(req);
         res.render('showPage');
     },
@@ -196,20 +196,17 @@ module.exports = {
     },
     //创建project页面
     createProject: function (req, res) {
+        res.render('createProject');
+    },
+    getActionList: function (req, res) {
         request.get(config.server + '/admin/action/list', function (error, response, info) {
             if (error) res.json({ error: error });
             if (!error && response.statusCode == 200) {
-                console.log(info);
                 info = JSON.parse(info);
-                res.render('createProject',{actions:info.data});
-
+                console.log(info);
+                res.json(info.data);
             }
         })
     }
-
-
-
-
-
 
 }

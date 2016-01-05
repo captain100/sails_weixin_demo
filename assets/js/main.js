@@ -82,10 +82,10 @@ $(function () {
         })
     })
     
-    $('.addAction').click(function(){
-        $('data-action-list').
+    // $('.addAction').click(function(){
+    //     $('data-action-list').
          
-    });
+    // });
 
 
 });

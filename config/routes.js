@@ -37,7 +37,10 @@ module.exports.routes = {
     //wechatController
     'all /wechat':'WeChatController.wechat',
     'get /project':'SystemController.findAllProject',
-    'get /createProject':'SystemController.createProject'
+    'get /createProject':'SystemController.createProject',
+    'get /getActionList':'SystemController.getActionList',
+    //project
+    '/insertProject':'ProjectController.insertProject'
     
     
   
