@@ -91,10 +91,6 @@ $(function () {
         $.post('/insertProject', { data: data }, function (e) {  
             self.location = '/project';
         })
-        
-
-
-
     });
 
     //绑定到还为生成的node节点上 见jquery delegate

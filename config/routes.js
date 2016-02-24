@@ -40,11 +40,15 @@ module.exports.routes = {
     'get /createProject':'SystemController.createProject',
     'get /getActionList':'SystemController.getActionList',
     //project
-    '/insertProject':'ProjectController.insertProject'
+    '/insertProject':'ProjectController.insertProject',
+    '/getProjectNo':'ProjectController.getProjectNo',
+    //userinfo
+    'get /userinfo':'SystemController.getUserinfo',
+    //修改微信menu菜单
+    '/updateWeixinMenu':'SystemController.updateWeixinMenu'
     
     
-  
-    
+
 
 
 };

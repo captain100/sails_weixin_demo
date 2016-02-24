@@ -11,10 +11,6 @@
     <link rel="stylesheet" href="/styles/mycss.css">
     <!-- 可选的Bootstrap主题文件（一般不用引入） -->
     <!--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">-->
-
-
-
-
 </head>
 
 <body>
@@ -25,8 +21,8 @@
         <div class="list_nav">
             <a href="/project">项目管理</a>
             <a href="/list">问卷题库</a>
-            <a href="/">帮助</a>
-            <a href="/">互动工厂</a>
+            <!--<a href="/">帮助</a>
+            <a href="/">互动工厂</a>-->
         </div>
         <div class="list_men">
             <ul class="util-nav">
@@ -34,7 +30,7 @@
                     <a class="wjNews" href="/message/list"></a>
                 </li>
                 <li class="username">
-                    <a href="javascript:;" title="90后爱国">90后爱国</a>
+                    <!--<a href="javascript:;" title="90后爱国">90后爱国</a>-->
 
                     <div class="arrowup">
                         <div class="arrowupt"></div>
@@ -58,71 +54,38 @@
             </ul>
         </div>
     </div>
-    <div class="list_cont">
-        <div class="list_check row">
-            <div class="list_tab">
-            </div>
-            <div class="list_sel">
 
-            </div>
-            <div class="list_sear">
-                <input type="text" id="search_txt" class="txt" value="输入标题搜索">
-                <input type="button" value="" id="search_btn" class="btn">
-
-            </div>
-        </div>
-
-        <div class="list_nr row">
-            <!--<div class="listBox">
-
-
-        </div>-->
-            <!--<div class="panel panel-default">
-            <div class="panel-body">
-                <ul>
-                    <li class="create">
-                        <a href="/new">
-                            新建问卷
-                        </a>
-                    </li>
-
-                    <% for(var i = 0;i < list.length;i++){ %>
-                    <li class="create" >
-                        <a href="/getQuestion?paperId=<%= list[i].paperId %>">
-                            <%= list[i].projectName %>
-                        </a>
-                    </li>
-                    <% } %>
-
-                </ul>
-            </div>
-
-
-        </div>-->
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <a href="/createProject">
-                         创建新的project
-                    </a>
-                    
-                </li>
-                
-                <% for(var i = 0;i < list.length;i++){ %>
-                    <li class="list-group-item">
-                        <a href="#">
-                            <div class="">
-                                <%=list[i].projectNo%>|
-                                    <%= list[i].projectName %>|
-                                        <%=list[i].updateTime%>
-                            </div>
-                        </a>
-                    </li>
-                    <% } %>
-            </ul>
-
-
-        </div>
+    <div class="col-md-12">
+        <a href="/createProject" class="btn btn-default">创建新的project</a>
     </div>
+    <table class="table table-striped">
+        <tr>
+            <th>项目Id</th>
+            <th>项目名称</th>
+            <th>项目创建时间</th>
+        </tr>
+        <% for(var i = 0;i < list.length;i++){ %>
+            <tr>
+                <td>
+                    <a href="/getProjectNo?projectNo=<%=list[i].projectNo%>">
+                        <%=list[i].projectNo%>
+                    </a>
+                </td>
+                <td>
+                    <a href="/getProjectNo?projectNo=<%=list[i].projectNo%>">
+                        <%= list[i].projectName%>
+                    </a>
+                </td>
+                <td>
+                    <a href="/getProjectNo?projectNo=<%=list[i].projectNo%>">
+                        <%=list[i].updateTime%>
+                    </a>
+                </td>
+            </tr>
+            <% } %>
+
+
+    </table>
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 

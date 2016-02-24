@@ -20,5 +20,15 @@ module.exports = {
                 res.json('ok');
             }
         });
+    },
+    'getProjectNo': function (req, res) {
+        var projectNo = req.query.projectNo;
+        request({url:config.server+'/admin/project/projectDetail?projectNo='+projectNo},function(error,response ,body){
+            if(!error&&response.statusCode ==200){
+                body = JSON.parse(body);
+                // res.json(body);
+                res.render('editProject',body.data);
+            }
+        })
     }
 }

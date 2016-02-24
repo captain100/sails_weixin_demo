@@ -207,6 +207,38 @@ module.exports = {
                 res.json(info.data);
             }
         })
+    },
+    //进入个人主页
+    getUserinfo: function (req, res) {
+        console.log('openid', req.query.openid);
+        res.render('userinfo', { projectId: '' });
+    },
+    //修改微信公众账号的菜单栏
+    updateWeixinMenu: function (req, res) {
+        console.log('>>>>>>>>>>>>>>>>>>>>>>')
+        api = new WechatAPI(config.APPID, config.APPSECRET);
+        api.removeMenu(function (err, result) {
+            if (result) {
+                var menu = {
+                    "button": [
+                        {
+                            "type": "view",
+                            "name": "个人主页",
+                            "url":"http://www.cpzero.cn:3010/auth/wechat"
+                        },
+                        {
+                            "type": "click",
+                            "name": "立刻生成任务",
+                            "key": "CREAT_TASK_1",
+                        },
+                    ]
+                };
+                api.createMenu(menu, function (err, result) {
+                    if (err) return console.log(err);
+                    return res.send(result);
+                });
+            }
+        });
     }
 
 }

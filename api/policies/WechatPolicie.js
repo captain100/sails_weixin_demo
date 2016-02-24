@@ -21,7 +21,14 @@ module.exports = function (req, res, next) {
             request('http://www.cpzero.cn/createTask?openid=' + openid, function (error, response, info) {
                 next();
             })
-
+            
+        } else if (message.Event === 'VIEW') {
+            console.log('>>>>>>>>123131>>>')
+            
+            var openid = message.FromUserName;
+            request('http://localhost:3001/userinfo?openid=' + openid, function (error, response, info) {
+                next();
+            })
 
         } else {
             res.reply({
