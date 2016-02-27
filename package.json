@@ -30,7 +30,8 @@
     "sails-disk": "~0.10.0",
     "skipper": "^0.5.8",
     "wechat": "^2.0.3",
-    "wechat-api": "^1.23.0"
+    "wechat-api": "^1.23.0",
+    "wechat-oauth": "^1.1.1"
   },
   "scripts": {
     "debug": "node debug app.js",

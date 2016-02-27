@@ -55,14 +55,15 @@
         </div>
     </div>
 
-    <div class="col-md-12">
-        <a href="/createProject" class="btn btn-default">创建新的project</a>
-    </div>
+
+
+
     <table class="table table-striped">
         <tr>
             <th>项目Id</th>
             <th>项目名称</th>
             <th>项目创建时间</th>
+            <th><a href="/createProject" class="btn btn-success">创建新的project</a></th>
         </tr>
         <% for(var i = 0;i < list.length;i++){ %>
             <tr>
@@ -81,8 +82,41 @@
                         <%=list[i].updateTime%>
                     </a>
                 </td>
+                <td>
+                    <a href="/getProjectNo?projectNo=<%=list[i].projectNo%>" class="btn btn-primary">
+                        编辑
+                    </a>
+                    <a href="/getProjectNo?projectNo=<%=list[i].projectNo%>">
+                        删除
+                    </a>
+                </td>
             </tr>
             <% } %>
+                <tr>
+                    <td colspan="4">
+                        <nav>
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+
+
+                    </td>
+                </tr>
 
 
     </table>

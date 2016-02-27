@@ -3,6 +3,8 @@ var async = require('async');
 var WechatAPI = require('wechat-api');
 var config = require('sails').config;
 var api = '';
+var OAuth = require('wechat-oauth');
+var client = new OAuth('wxb4fb29266130bb85', '675f1cd7edfcaba17b987c44c83e0a6b');
 
 module.exports = {
     //访问网站首页
@@ -210,12 +212,21 @@ module.exports = {
     },
     //进入个人主页
     getUserinfo: function (req, res) {
-        console.log('openid', req.query.openid);
+        console.log('openid', req);
+        // client.getUser(req.query.openid, function (err, result) {
+        //     var userInfo = result;
+        //     console.log(userInfo);
+        // });
+
         res.render('userinfo', { projectId: '' });
+
+
+
     },
     //修改微信公众账号的菜单栏
     updateWeixinMenu: function (req, res) {
-        console.log('>>>>>>>>>>>>>>>>>>>>>>')
+        var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_base');
+        console.log(url)
         api = new WechatAPI(config.APPID, config.APPSECRET);
         api.removeMenu(function (err, result) {
             if (result) {
@@ -224,7 +235,7 @@ module.exports = {
                         {
                             "type": "view",
                             "name": "个人主页",
-                            "url":"http://www.cpzero.cn:3010/auth/wechat"
+                            "url": url
                         },
                         {
                             "type": "click",

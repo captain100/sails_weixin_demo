@@ -22,13 +22,11 @@ module.exports = function (req, res, next) {
                 next();
             })
             
-        } else if (message.Event === 'VIEW') {
-            console.log('>>>>>>>>123131>>>')
-            
-            var openid = message.FromUserName;
-            request('http://localhost:3001/userinfo?openid=' + openid, function (error, response, info) {
-                next();
-            })
+        // } else if (message.Event === 'VIEW') {
+        //     var openid = message.FromUserName;
+        //     request('http://localhost:3001/userinfo?openid=' + openid, function (error, response, info) {
+        //         next();
+        //     })
 
         } else {
             res.reply({

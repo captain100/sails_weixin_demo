@@ -8,7 +8,6 @@ var wechat_config = {
 
 module.exports = {
     'wechat': function (req, res, next) {
-        console.log('---------23213-------');
         res.end();
     }
 }
