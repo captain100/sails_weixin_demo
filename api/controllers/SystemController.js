@@ -212,20 +212,44 @@ module.exports = {
     },
     //进入个人主页
     getUserinfo: function (req, res) {
-        console.log('openid', req);
-        // client.getUser(req.query.openid, function (err, result) {
-        //     var userInfo = result;
-        //     console.log(userInfo);
-        // });
-
-        res.render('userinfo', { projectId: '' });
-
-
-
+        console.log('code', req.query.code);
+        async.waterfall([
+            function (cb) {
+                client.getAccessToken(req.query.code, function (err, result) {
+                    var accessToken = result.data.access_token;
+                    var openid = result.data.openid;
+                    console.log('openid', openid);
+                    return cb(null, openid);
+                });
+            },
+            function (openid, cb) {
+                console.log('openid==', openid);
+                client.getUser(openid, function (err, userInfo) {
+                    console.log('userInfo', userInfo);
+                    return cb(err, userInfo);
+                });
+            },
+            function (userInfo, cb) {
+                var url = config.server + "/user/showUserDetail?account=" + userInfo.openid + "&nickName=" + userInfo.nickname;
+                request.get(url, function (err, response, body) {
+                    if (!err && response.statusCode == 200) {
+                        var userinfo ={
+                            projectData:JSON.parse(body).data,
+                            userInfo:userInfo
+                        };
+                        return cb(null, userinfo);
+                    }
+                    return cd(err, null);
+                })
+            }
+        ], function (err, result) {
+            console.log(result);
+            res.render('userinfo', { projectId: '' });
+        })
     },
     //修改微信公众账号的菜单栏
     updateWeixinMenu: function (req, res) {
-        var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_base');
+        var url = client.getAuthorizeURL('http://1hutupq1go.proxy.qqbrowser.cc/userinfo', 'STATE', 'snsapi_userinfo');
         console.log(url)
         api = new WechatAPI(config.APPID, config.APPSECRET);
         api.removeMenu(function (err, result) {

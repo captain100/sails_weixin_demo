@@ -8,10 +8,10 @@ var wechat_config = {
 
 module.exports = function (req, res, next) {
     wechat(wechat_config, function (req, res, next) {
-        console.log(11111111111);
+        // console.log(11111111111);
         // 微信输入信息都在req.weixin上
         var message = req.weixin;
-        console.log(message);
+        // console.log(message);
         if (message.Content === 'qiushi') {
             // 回复qiushi(普通回复)
             res.reply('hehe');
