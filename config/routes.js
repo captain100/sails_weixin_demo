@@ -45,8 +45,11 @@ module.exports.routes = {
     //userinfo
     'get /userinfo':'SystemController.getUserinfo',
     //修改微信menu菜单
-    '/updateWeixinMenu':'SystemController.updateWeixinMenu'
-    
+    '/updateWeixinMenu':'SystemController.updateWeixinMenu',
+    //进入userinfo的界面
+    '/showUserinfo':'SystemController.showUserinfo',
+    //注册用户
+    '/registWechatUser':'SystemController.registWechatUser'
     
 
 

@@ -2,35 +2,225 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>个人主页</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
         .box {
             width: 100%;
+            height: 48px;
             display: block;
             background: #CCC;
+        }
+        
+        .container {
+            width: 100%;
+            display: block;
+        }
+        
+        .header {
+            display: inline-block;
+            width: 100%;
+            height: 240px;
+            background-image: url("<%= profileUrl %>");
+            background-size: cover;
+            background-position: 50% 50%;
+        }
+        
+        .header .zhezhao .authorIMG {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            min-height: 60px;
+            border-radius: 60px;
+            margin: 55px auto 10px auto;
+            display: block;
+            /*border-color: #2da5ec;*/
+            border-width: 8px;
+            /*border-style: groove;*/
+        }
+        
+        .zhezhao {
+            position: absolute;
+            top: 0;
+            height: 240px;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .header .authorIcon {
+            width: 12px;
+            height: 12px;
+        }
+        
+        .header span {
+            color: #fff;
+            font-size: 15px;
+        }
+        
+        .name {
+            margin-top: 134px;
+            text-align: center;
+        }
+        
+        .name img {
+            background: #fff;
+            border-radius: 50%;
+        }
+        
+        .userInfoBox {
+            display: -webkit-flex;
+            justify-content: space-between;
+            flex-direction: row;
+            display: flex;
+            align-items: center;
+            color: #fff;
+        }
+        
+        .userInfoBox span {
+            font-size: 12px;
+        }
+        
+        .tags {
+            height: 44px;
+            color: #666;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        
+        .tags div {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        .pro_item {
+            height: 90px;
+            padding: 10px;
+            margin-bottom: 5px;
+            display: block;
+            color: #666;
+            border-bottom: 1px solid #e2e2e2;
+            position: relative;
+        }
+        
+        .pro_bottom_info {
+            display: -webkit-flex;
+            position: absolute;
+            display: flex;
+            bottom: 7px;
+            left: 0px;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+        }
+        
+        .join {
+            display: none;
+        }
+        
+        .join_btn {
+            height: 20px;
+            margin: 2px auto;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #05C74A;
+            padding: 10px;
+        }
+        
+        .touchDiv {
+            border-bottom: 1px solid #e2e2e2
         }
     </style>
 </head>
 
 <body>
-    <%if(projectId){%>
-        <ul class="box">
-            <li>asdfdsaf</li>
-        </ul>
-        <%} else {%>
-            <ul class="box">
-                页面正在加紧开发中。。。。
+    <div class="container">
+        <div class="header">
+            <div class="zhezhao">
+                <div>
+                    <img class="authorIMG" src="<%= profileUrl %>" />
 
-            </ul>
-            <%}%>
+                </div>
+            </div>
+            <div class="name">
+                <span><%= nickName %></span>
+                <%if(sex == 1){ %>
+                    <img class="authorIcon" src="/images/nan.png" alt="">
+
+                    <%} else {%>
+                        <img class="authorIcon" src="/images/nv.png" alt="">
+                        <% }%>
+            </div>
+            <div style="text-align: center; padding: 10px;">
+                <span>参加的项目: <%= projectUniqNo ? projectName : '你还未参加项目' %><span>
+            </div>
+
+            <div class="userInfoBox">
+
+                <div style="width:100%  ;  text-align: center;">
+                    <span>项目进行度:<%= projectUniqNo ? progressRate:'20%' %> </span>
+            </div>
+            ｜
+            <div style="width:100%  ;  text-align: center;">
+                <span>项目表现: 良好</span>
+            </div>
+            ｜
+            <div style="width:100%  ;  text-align: center;">
+                <span>等级: <%= level %></span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <%if(projectUniqNo === null) {%>
+        <!--未参加的用户 -->
+        <div class="tags">
+            <div style="border-right:1px solid #ccc;">项目列表</div>
+            <div>声名信息</div>
+        </div>
+        <%}else {%>
+            <!--已参加的用户 -->
+            <div class="tags">
+                <div style="border-right:1px solid #ccc;">当前任务页</div>
+                <div>项目资料</div>
+            </div>
+            <% }%>
+
+                <!--projectList -->
+                <div class="projectlist">
+                    <% for( i= 0; i < projectList.length ;i++){ %>
+                        <div class="touchDiv" onclick="">
+                            <div class="pro_item">
+                                <div>项目名称：<%=projectList[i].projectName%></div>
+                                <div>简介：cjcjcjcj</div>
+                                <div class="pro_bottom_info">
+                                    <span style="margin-left: 0px;">2016-2-25</span>
+                                    <span style="margin-right: 0px;">参加人数：10000</span>
+                                </div>
+                            </div>
+                            <div class="join_btn join">参加该项目</div>
+                        </div>
+                        <% } %>
+                </div>
+
+
+
+
 
 
 </body>

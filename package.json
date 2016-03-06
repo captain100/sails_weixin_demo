@@ -31,7 +31,8 @@
     "skipper": "^0.5.8",
     "wechat": "^2.0.3",
     "wechat-api": "^1.23.0",
-    "wechat-oauth": "^1.1.1"
+    "wechat-oauth": "^1.1.1",
+    "weui": "^0.4.0"
   },
   "scripts": {
     "debug": "node debug app.js",

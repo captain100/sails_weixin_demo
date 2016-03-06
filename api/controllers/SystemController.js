@@ -76,6 +76,7 @@ module.exports = {
             }
         });
     },
+    //查询全部列表
     findAllProject: function (req, res) {
         request.get(config.server + '/admin/project/list', function (error, response, data) {
             if (!error && response.statusCode == 200) {
@@ -210,7 +211,7 @@ module.exports = {
             }
         })
     },
-    //进入个人主页
+    //点击个人主页后进行的校验
     getUserinfo: function (req, res) {
         console.log('code', req.query.code);
         async.waterfall([
@@ -233,9 +234,9 @@ module.exports = {
                 var url = config.server + "/user/showUserDetail?account=" + userInfo.openid + "&nickName=" + userInfo.nickname;
                 request.get(url, function (err, response, body) {
                     if (!err && response.statusCode == 200) {
-                        var userinfo ={
-                            projectData:JSON.parse(body).data,
-                            userInfo:userInfo
+                        var userinfo = {
+                            projectData: JSON.parse(body).data,
+                            userInfo: userInfo
                         };
                         return cb(null, userinfo);
                     }
@@ -243,13 +244,99 @@ module.exports = {
                 })
             }
         ], function (err, result) {
-            console.log(result);
-            res.render('userinfo', { projectId: '' });
-        })
+            console.log(result)
+            if (result.projectData.status === 1) {
+                //跳转倒选择project
+                console.log('跳转倒选择projec');
+                var userInfo = result.userInfo;
+                var projectData = result.projectData;
+                request.get(config.server + '/admin/project/list', function (error, response, data) {
+                    if (!error && response.statusCode == 200) {
+                        data = JSON.parse(data);
+                        console.log(data.data);
+                        return res.render('userinfo', {
+                            account: userInfo.openid,
+                            nickName: userInfo.nickname,
+                            sex: userInfo.sex,
+                            level: 10,
+                            profileUrl: userInfo.headimgurl,
+                            projectUniqNo: projectData.projectUniqNo,
+                            projectName: projectData.projectName,
+                            progressRate: null,
+                            projectList: data.data
+                        });
+                    }
+                });
+
+            } else if (result.projectData.status === 3) {
+                // console.log(result.userInfo);
+                return res.redirect('/registWechatUser?account=' + result.userInfo.openid +
+                    '&nickName=' + result.userInfo.nickname +
+                    '&sex=' + result.userInfo.sex +
+                    '&profileUrl=' + result.userInfo.headimgurl)
+            } else {
+                //跳转倒选择project
+                console.log('跳转倒选择projec');
+                var userInfo = result.userInfo;
+                var projectData = result.projectData;
+
+                return res.render('userinfo', {
+                    account: userInfo.openid,
+                    nickName: userInfo.nickname,
+                    sex: userInfo.sex,
+                    level: 10,
+                    profileUrl: userInfo.headimgurl,
+                    projectUniqNo: projectData.projectUniqNo,
+                    projectName: projectData.projectName,
+                    progressRate: projectData.progressRate,
+                    projectList: []
+                });
+            }
+
+
+        });
     },
+    //跳转个人主页界面
+    showUserinfo: function (req, res) {
+
+        res.render('userinfo', { projectId: '' });
+    },
+    
+    //用户注册
+    registWechatUser: function (req, res) {
+        var account = req.query.account,
+            nickName = req.query.nickName,
+            realName = req.query.realName || '',
+            phoneNum = req.query.phoneNum || '',
+            sex = req.query.sex || 2,
+            level = req.query.level || 0,
+            type = req.query.type || 'weChat',
+            profileUrl = req.query.profileUrl || '';
+
+        request.get(config.server + '/user/createUser?account=' + account +
+            '&nickName=' + nickName + '&realName=' + realName +
+            '&phoneNum=' + phoneNum + '&sex=' + sex + '&type=1&profileUrl=' + profileUrl +
+            '&level=' + level, function (err, response, data) {
+                if (!err && response.statusCode == 200) {
+                    res.render('userinfo', {
+                        account: account,
+                        nickName: nickName,
+                        sex: sex,
+                        level: level,
+                        profileUrl: profileUrl,
+                        projectUniqNo: null,
+                        projectName: null,
+                        progressRate: null
+                    });
+                }
+            });
+
+    },
+    
+    
     //修改微信公众账号的菜单栏
     updateWeixinMenu: function (req, res) {
-        var url = client.getAuthorizeURL('http://1hutupq1go.proxy.qqbrowser.cc/userinfo', 'STATE', 'snsapi_userinfo');
+        var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_userinfo');
         console.log(url)
         api = new WechatAPI(config.APPID, config.APPSECRET);
         api.removeMenu(function (err, result) {
