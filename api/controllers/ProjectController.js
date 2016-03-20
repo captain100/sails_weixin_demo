@@ -1,7 +1,7 @@
 var config = require('sails').config;
 var request = require('request');
 module.exports = {
-    'insertProject': function (req, res) {
+    'insertProject': function(req, res) {
         var data = JSON.parse(req.body.data);
         console.log(data);
         var options = {
@@ -14,21 +14,36 @@ module.exports = {
             json: true,
             body: data
         };
-        request(options, function (error, response, data) {
+        request(options, function(error, response, data) {
             if (!error && response.statusCode == 200) {
                 console.log('----info------', data);
                 res.json('ok');
             }
         });
     },
-    'getProjectNo': function (req, res) {
+    'getProjectNo': function(req, res) {
         var projectNo = req.query.projectNo;
-        request({url:config.server+'/admin/project/projectDetail?projectNo='+projectNo},function(error,response ,body){
-            if(!error&&response.statusCode ==200){
+        request({ url: config.server + '/admin/project/projectDetail?projectNo=' + projectNo }, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
                 body = JSON.parse(body);
                 // res.json(body);
-                res.render('editProject',body.data);
+                res.render('editProject', body.data);
             }
         })
+    },
+    'jionProject': function(req, res) {
+        var account = req.query.account;
+        var projectNo = req.query.projectNo;
+        console.log(account, projectNo);
+        
+
+        request({ url: config.server + '/user/participateProject?projectNo=' + projectNo + '&account='+ account }, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                console.log(body);
+                res.end();
+            }
+        })
+
     }
 }

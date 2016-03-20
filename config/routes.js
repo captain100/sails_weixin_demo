@@ -49,7 +49,9 @@ module.exports.routes = {
     //进入userinfo的界面
     '/showUserinfo':'SystemController.showUserinfo',
     //注册用户
-    '/registWechatUser':'SystemController.registWechatUser'
+    '/registWechatUser':'SystemController.registWechatUser',
+    //参加project
+    '/jionProject':'ProjectController.jionProject'
     
 
 

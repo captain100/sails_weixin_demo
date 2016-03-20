@@ -8,15 +8,15 @@ var client = new OAuth('wxb4fb29266130bb85', '675f1cd7edfcaba17b987c44c83e0a6b')
 
 module.exports = {
     //访问网站首页
-    showExpress: function (req, res) {
+    showExpress: function(req, res) {
 
         console.log(req);
         res.render('showPage');
     },
     //获取试卷数据信息
-    heartqOl: function (req, res) {
+    heartqOl: function(req, res) {
         // console.log(sails.config);
-        request.get({ url: config.server + '/info/paper/getPaperContent?paperId=' + req.query.paperId + '&taskNo=' + req.query.taskNo + '&userAccount=' + req.query.userAccount }, function (err, response, body) {
+        request.get({ url: config.server + '/info/paper/getPaperContent?paperId=' + req.query.paperId + '&taskNo=' + req.query.taskNo + '&userAccount=' + req.query.userAccount }, function(err, response, body) {
             console.log(body);
             body = JSON.parse(body);
             console.log(body.data);
@@ -24,7 +24,7 @@ module.exports = {
         })
     },
     //提交试卷数据
-    submitQuestion: function (req, res) {
+    submitQuestion: function(req, res) {
         var data = req.query.data;
         var json = JSON.stringify(data);
         json = JSON.parse(json);
@@ -39,7 +39,7 @@ module.exports = {
             json: true,
             body: json
         };
-        request(options, function (error, response, data) {
+        request(options, function(error, response, data) {
             if (!error && response.statusCode == 200) {
                 console.log('----info------', data);
                 res.json(200, { info: data });
@@ -47,17 +47,17 @@ module.exports = {
         });
     },
     //admin首页
-    showAdmin: function (req, res) {
+    showAdmin: function(req, res) {
         res.render('admin', {});
     },
     //新建试卷页面
-    createQuestion: function (req, res) {
+    createQuestion: function(req, res) {
         res.render('newqs', {});
     },
     // 通过id查询试卷
-    findQuestion: function (req, res) {
+    findQuestion: function(req, res) {
         var paperId = req.query.paperId || 150;
-        request.get(config.server + '/admin/paper/readDetail?paperId=' + paperId, function (err, response, data) {
+        request.get(config.server + '/admin/paper/readDetail?paperId=' + paperId, function(err, response, data) {
             console.log(response);
             if (!err && response.statusCode == 200) {
                 data = JSON.parse(data);
@@ -67,8 +67,8 @@ module.exports = {
         });
     },
     //试卷列表
-    findAllQuestion: function (req, res) {
-        request.get(config.server + '/admin/paper/list?paperName=', function (error, response, data) {
+    findAllQuestion: function(req, res) {
+        request.get(config.server + '/admin/paper/list?paperName=', function(error, response, data) {
             if (!error && response.statusCode == 200) {
                 data = JSON.parse(data);
                 console.log(data);
@@ -77,8 +77,8 @@ module.exports = {
         });
     },
     //查询全部列表
-    findAllProject: function (req, res) {
-        request.get(config.server + '/admin/project/list', function (error, response, data) {
+    findAllProject: function(req, res) {
+        request.get(config.server + '/admin/project/list', function(error, response, data) {
             if (!error && response.statusCode == 200) {
                 data = JSON.parse(data);
                 console.log(data);
@@ -86,9 +86,9 @@ module.exports = {
             }
         });
     },
-    
+
     //创建试卷接口
-    insertQuestion: function (req, res) {
+    insertQuestion: function(req, res) {
         var data = JSON.parse(req.body.data);
         console.log(data);
         var options = {
@@ -101,7 +101,7 @@ module.exports = {
             json: true,
             body: data
         };
-        request(options, function (error, response, data) {
+        request(options, function(error, response, data) {
             if (!error && response.statusCode == 200) {
                 console.log('----info------', data);
                 res.render('admin', {});
@@ -109,7 +109,7 @@ module.exports = {
         });
     },
     //推送模版消息
-    pushTemplateMSG: function (req, res) {
+    pushTemplateMSG: function(req, res) {
         console.log('推送消息已到达')
         // console.log(req.body);
         api = new WechatAPI(config.APPID, config.APPSECRET);
@@ -136,31 +136,31 @@ module.exports = {
         };
         var openid = req.param('openid');
         // console.log('openid', openid);
-        api.sendTemplate(openid, templateId, url, data, function (err, result) {
+        api.sendTemplate(openid, templateId, url, data, function(err, result) {
             console.log('error', err);
             console.log('result', result);
             res.json(200, result);
         });
     },
     //createTask
-    createTask: function (req, res, next) {
+    createTask: function(req, res, next) {
         var openid = req.query.openid;
         console.log(openid);
-        request(config.server + '/info/task/createTaskList?userAccount=' + openid + '&projectUniqNo=123$1', function (error, response, info) {
+        request(config.server + '/info/task/createTaskList?userAccount=' + openid + '&projectUniqNo=123$1', function(error, response, info) {
             console.log(info);
             next();
         })
     },
     //schedule列表
-    getSchedule: function (req, res) {
+    getSchedule: function(req, res) {
         var userAccount = req.query.userAccount;
         var projectUniqNo = req.query.projectUniqNo;
         var scheduleCount = req.query.scheduleCount;
         var url = config.server + "/info/task/userCurrentList?userAccount=" + userAccount + "&projectUniqNo=" + projectUniqNo + "&scheduleCount=" + scheduleCount;
         // console.log(url);
         async.parallel({
-            data: function (cb) {
-                request.get({ url: url }, function (error, response, info) {
+            data: function(cb) {
+                request.get({ url: url }, function(error, response, info) {
                     if (error) res.json({ error: error });
                     if (!error && response.statusCode == 200) {
                         info = JSON.parse(info);
@@ -170,26 +170,26 @@ module.exports = {
                     }
                 })
             },
-            user: function (cb) {
+            user: function(cb) {
                 api = new WechatAPI(config.APPID, config.APPSECRET);
-                api.getUser(userAccount, function (error, userInfo) {
+                api.getUser(userAccount, function(error, userInfo) {
                     console.log(error + ' |  ' + userInfo)
                     cb(null, userInfo);
                 });
             }
-        }, function (error, result) {
+        }, function(error, result) {
             // console.log(result)
             res.render('schedule', result);
         })
     },
     //修改题目状态
-    changeActionStatus: function (req, res) {
+    changeActionStatus: function(req, res) {
         var taskNo = req.query.taskNo;
         var userAccount = req.query.userAccount;
         var projectUniqNo = req.query.projectUniqNo;
         var scheduleCount = req.query.scheduleCount;
         // http://123.56.126.231:8080/info/task/userCommitTask?taskNo='+taskNo+'&userAccount='+userAccount
-        request.get(config.server + '/info/task/userCommitTask?taskNo=' + taskNo + '&userAccount=' + userAccount, function (error, response, info) {
+        request.get(config.server + '/info/task/userCommitTask?taskNo=' + taskNo + '&userAccount=' + userAccount, function(error, response, info) {
             if (error) res.json({ error: error });
             if (!error && response.statusCode == 200) {
                 console.log(info);
@@ -198,11 +198,11 @@ module.exports = {
         })
     },
     //创建project页面
-    createProject: function (req, res) {
+    createProject: function(req, res) {
         res.render('createProject');
     },
-    getActionList: function (req, res) {
-        request.get(config.server + '/admin/action/list', function (error, response, info) {
+    getActionList: function(req, res) {
+        request.get(config.server + '/admin/action/list', function(error, response, info) {
             if (error) res.json({ error: error });
             if (!error && response.statusCode == 200) {
                 info = JSON.parse(info);
@@ -212,27 +212,27 @@ module.exports = {
         })
     },
     //点击个人主页后进行的校验
-    getUserinfo: function (req, res) {
+    getUserinfo: function(req, res) {
         console.log('code', req.query.code);
         async.waterfall([
-            function (cb) {
-                client.getAccessToken(req.query.code, function (err, result) {
+            function(cb) {
+                client.getAccessToken(req.query.code, function(err, result) {
                     var accessToken = result.data.access_token;
                     var openid = result.data.openid;
                     console.log('openid', openid);
                     return cb(null, openid);
                 });
             },
-            function (openid, cb) {
+            function(openid, cb) {
                 console.log('openid==', openid);
-                client.getUser(openid, function (err, userInfo) {
+                client.getUser(openid, function(err, userInfo) {
                     console.log('userInfo', userInfo);
                     return cb(err, userInfo);
                 });
             },
-            function (userInfo, cb) {
+            function(userInfo, cb) {
                 var url = config.server + "/user/showUserDetail?account=" + userInfo.openid + "&nickName=" + userInfo.nickname;
-                request.get(url, function (err, response, body) {
+                request.get(url, function(err, response, body) {
                     if (!err && response.statusCode == 200) {
                         var userinfo = {
                             projectData: JSON.parse(body).data,
@@ -243,14 +243,14 @@ module.exports = {
                     return cd(err, null);
                 })
             }
-        ], function (err, result) {
+        ], function(err, result) {
             console.log(result)
             if (result.projectData.status === 1) {
                 //跳转倒选择project
                 console.log('跳转倒选择projec');
                 var userInfo = result.userInfo;
                 var projectData = result.projectData;
-                request.get(config.server + '/admin/project/list', function (error, response, data) {
+                request.get(config.server + '/admin/project/list', function(error, response, data) {
                     if (!error && response.statusCode == 200) {
                         data = JSON.parse(data);
                         console.log(data.data);
@@ -297,13 +297,29 @@ module.exports = {
         });
     },
     //跳转个人主页界面
-    showUserinfo: function (req, res) {
+    showUserinfo: function(req, res) {
 
-        res.render('userinfo', { projectId: '' });
+        request.get(config.server + '/admin/project/list', function(error, response, data) {
+            if (!error && response.statusCode == 200) {
+                data = JSON.parse(data);
+                console.log(data.data);
+                return res.render('userinfo', {
+                    account: 'oewo7wMrPRdkfCxLhkQ0qTTMyRME',
+                    nickName: 'fafa',
+                    sex: 1,
+                    level: 10,
+                    profileUrl: 'http://wx.qlogo.cn/mmopen/UAMuw0RfSYw9nDMRAB5owuPmyD9YmsuNYORtiaoIj1jRQWPK9mddibwRZUreR5KkS3JNn883SKQ1AVg4ueZf5ibVDicic3DJSj9Lb/0',
+                    projectUniqNo: null,
+                    projectName: '',
+                    progressRate: null,
+                    projectList: data.data
+                });
+            }
+        });
     },
-    
+
     //用户注册
-    registWechatUser: function (req, res) {
+    registWechatUser: function(req, res) {
         var account = req.query.account,
             nickName = req.query.nickName,
             realName = req.query.realName || '',
@@ -316,7 +332,7 @@ module.exports = {
         request.get(config.server + '/user/createUser?account=' + account +
             '&nickName=' + nickName + '&realName=' + realName +
             '&phoneNum=' + phoneNum + '&sex=' + sex + '&type=1&profileUrl=' + profileUrl +
-            '&level=' + level, function (err, response, data) {
+            '&level=' + level, function(err, response, data) {
                 if (!err && response.statusCode == 200) {
                     res.render('userinfo', {
                         account: account,
@@ -332,14 +348,14 @@ module.exports = {
             });
 
     },
-    
-    
+
+
     //修改微信公众账号的菜单栏
-    updateWeixinMenu: function (req, res) {
+    updateWeixinMenu: function(req, res) {
         var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_userinfo');
         console.log(url)
         api = new WechatAPI(config.APPID, config.APPSECRET);
-        api.removeMenu(function (err, result) {
+        api.removeMenu(function(err, result) {
             if (result) {
                 var menu = {
                     "button": [
@@ -355,7 +371,7 @@ module.exports = {
                         },
                     ]
                 };
-                api.createMenu(menu, function (err, result) {
+                api.createMenu(menu, function(err, result) {
                     if (err) return console.log(err);
                     return res.send(result);
                 });

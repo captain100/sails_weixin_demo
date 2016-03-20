@@ -133,12 +133,10 @@
         }
         
         .join_btn {
-            height: 20px;
-            margin: 2px auto;
-            text-align: center;
-            border-radius: 5px;
-            background-color: #05C74A;
-            padding: 10px;
+            text-decoration: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
         
         .touchDiv {
@@ -206,23 +204,25 @@
                     <% for( i= 0; i < projectList.length ;i++){ %>
                         <div class="touchDiv" onclick="">
                             <div class="pro_item">
-                                <div>项目名称：<%=projectList[i].projectName%></div>
-                                <div>简介：cjcjcjcj</div>
+                                <div>项目名称：
+                                    <%=projectList[i].projectName%>
+                                </div>
+                                <div>简介：</div>
+                                <a href="#" class="join_btn" onclick="joinProject('<%=account%>','<%=projectList[i].projectNo%>')">参加项目</a>
                                 <div class="pro_bottom_info">
                                     <span style="margin-left: 0px;">2016-2-25</span>
                                     <span style="margin-right: 0px;">参加人数：10000</span>
                                 </div>
                             </div>
-                            <div class="join_btn join">参加该项目</div>
                         </div>
                         <% } %>
                 </div>
-
-
-
-
-
-
+                <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+                <script>
+                    function joinProject(account,projectNo){
+                         $.get('/jionProject',{account:account,projectNo:projectNo});
+                    }
+                </script>
 </body>
 
 </html>
