@@ -245,15 +245,16 @@ module.exports = {
             }
         ], function(err, result) {
             console.log(result)
+            
             if (result.projectData.status === 1) {
-                //跳转倒选择project
+                //创建完没选projec
                 console.log('跳转倒选择projec');
                 var userInfo = result.userInfo;
                 var projectData = result.projectData;
                 request.get(config.server + '/admin/project/list', function(error, response, data) {
                     if (!error && response.statusCode == 200) {
                         data = JSON.parse(data);
-                        console.log(data.data);
+                        // console.log(data.data);
                         return res.render('userinfo', {
                             account: userInfo.openid,
                             nickName: userInfo.nickname,
@@ -263,42 +264,50 @@ module.exports = {
                             projectUniqNo: projectData.projectUniqNo,
                             projectName: projectData.projectName,
                             progressRate: null,
-                            projectList: data.data
+                            projectList: data.data,
+                            userAllTaskList:[]
                         });
                     }
                 });
 
             } else if (result.projectData.status === 3) {
-                // console.log(result.userInfo);
+                //当前是个新用户要先创建再选择
                 return res.redirect('/registWechatUser?account=' + result.userInfo.openid +
                     '&nickName=' + result.userInfo.nickname +
                     '&sex=' + result.userInfo.sex +
                     '&profileUrl=' + result.userInfo.headimgurl)
             } else {
-                //跳转倒选择project
-                console.log('跳转倒选择projec');
+                //已经选择project
+                console.log('已经选择project');
                 var userInfo = result.userInfo;
                 var projectData = result.projectData;
-
-                return res.render('userinfo', {
-                    account: userInfo.openid,
-                    nickName: userInfo.nickname,
-                    sex: userInfo.sex,
-                    level: 10,
-                    profileUrl: userInfo.headimgurl,
-                    projectUniqNo: projectData.projectUniqNo,
-                    projectName: projectData.projectName,
-                    progressRate: projectData.progressRate,
-                    projectList: []
-                });
+                console.log(projectData);
+                var url = config.server + "/info/task/userAllTaskList?projectUniqNo=" + projectData.userProjectDetail.projectUniqNo + "&userAccount=" + userInfo.openid;
+                    console.log(url);
+                    return request(url, function(error, response, result) {
+                        if (!error && response.statusCode == 200) {
+                            result = JSON.parse(result);
+                            console.log(result)
+                            // return res.json({ 'userAllTaskList': result.data.listCount });
+                            return res.render('userinfo', {
+                                    account: userInfo.openid,
+                                    nickName: userInfo.nickname,
+                                    sex: userInfo.sex,
+                                    level: 10,
+                                    profileUrl: userInfo.headimgurl,
+                                    projectUniqNo: projectData.projectUniqNo,
+                                    projectName: projectData.projectName,
+                                    progressRate: projectData.progressRate,
+                                    projectList: [],
+                                    userAllTaskList:result.data.listCount
+                                });
+                        }
+                    })
             }
-
-
         });
     },
     //跳转个人主页界面
     showUserinfo: function(req, res) {
-
         request.get(config.server + '/admin/project/list', function(error, response, data) {
             if (!error && response.statusCode == 200) {
                 data = JSON.parse(data);
@@ -312,7 +321,8 @@ module.exports = {
                     projectUniqNo: null,
                     projectName: '',
                     progressRate: null,
-                    projectList: data.data
+                    projectList: data.data,
+                    userAllTaskList:[]
                 });
             }
         });
@@ -352,7 +362,8 @@ module.exports = {
 
     //修改微信公众账号的菜单栏
     updateWeixinMenu: function(req, res) {
-        var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_userinfo');
+        // var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_userinfo');
+        var url = client.getAuthorizeURL('http://1hutupq1go.proxy.qqbrowser.cc/userinfo', 'STATE', 'snsapi_userinfo');
         console.log(url)
         api = new WechatAPI(config.APPID, config.APPSECRET);
         api.removeMenu(function(err, result) {

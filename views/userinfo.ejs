@@ -150,8 +150,7 @@
         <div class="header">
             <div class="zhezhao">
                 <div>
-                    <img class="authorIMG" src="<%= profileUrl %>" />
-
+                    <img class="authorIMG" src="<%= profileUrl %>" style="display:none" />
                 </div>
             </div>
             <div class="name">
@@ -185,42 +184,62 @@
     </div>
 
 
-    <%if(projectUniqNo === null) {%>
-        <!--未参加的用户 -->
-        <div class="tags">
-            <div style="border-right:1px solid #ccc;">项目列表</div>
-            <div>声名信息</div>
-        </div>
-        <%}else {%>
-            <!--已参加的用户 -->
-            <div class="tags">
-                <div style="border-right:1px solid #ccc;">当前任务页</div>
-                <div>项目资料</div>
-            </div>
-            <% }%>
 
-                <!--projectList -->
-                <div class="projectlist">
-                    <% for( i= 0; i < projectList.length ;i++){ %>
-                        <div class="touchDiv" onclick="">
-                            <div class="pro_item">
-                                <div>项目名称：
-                                    <%=projectList[i].projectName%>
-                                </div>
-                                <div>简介：</div>
-                                <a href="#" class="join_btn" onclick="joinProject('<%=account%>','<%=projectList[i].projectNo%>')">参加项目</a>
-                                <div class="pro_bottom_info">
-                                    <span style="margin-left: 0px;">2016-2-25</span>
-                                    <span style="margin-right: 0px;">参加人数：10000</span>
-                                </div>
-                            </div>
-                        </div>
-                        <% } %>
+    <!--projectList -->
+    <div class="projectlist">
+        <% for( i= 0; i < projectList.length ;i++){ %>
+            <div class="touchDiv" onclick="">
+                <div class="pro_item">
+                    <div>项目名称：
+                        <%=projectList[i].projectName%>
+                    </div>
+                    <div>简介：</div>
+                    <a href="#" class="join_btn" onclick="joinProject('<%=account%>','<%=projectList[i].projectNo%>')">参加项目</a>
+                    <div class="pro_bottom_info">
+                        <span style="margin-left: 0px;">2016-2-25</span>
+                        <span style="margin-right: 0px;">参加人数：10000</span>
+                    </div>
                 </div>
+            </div>
+            <% } %>
+    </div>
+
+
+    <%if(userAllTaskList.length > 0 ) {%>
+        <%for(var i = 0 ; i< userAllTaskList.length ; i++){ %>
+            <div>
+                <%=userAllTaskList[i].chTitle%>
+                    <%=userAllTaskList[i].chTitle%>
+                        <%=userAllTaskList[i].done %>
+                            <%=userAllTaskList[i].isDone %>
+            </div>
+            <% } }%>
+            <div id="taskList">
+            </div>
+
+
+
                 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
                 <script>
                     function joinProject(account,projectNo){
-                         $.get('/jionProject',{account:account,projectNo:projectNo});
+                         $.get('/jionProject',{account:account,projectNo:projectNo},function(e){
+                             if(e.userAllTaskList && e.userAllTaskList.length > 0){
+                                 alert('已参加project成功');  
+                                 var projectlist = document.getElementsByClassName('projectlist');
+                                 projectlist[0].style.display = 'none';
+                                 var taskList = document.getElementById('taskList');
+                                 
+                                 e.userAllTaskList.map(function(item,key){
+                                     var node = document.createElement('div');
+                                     node.innerHTML = item.chTitle;
+                                    return  taskList.appendChild(node);
+                                 })
+                                 
+                                 
+                                 
+
+                             }  
+                         });
                     }
                 </script>
 </body>

@@ -35,15 +35,25 @@ module.exports = {
         var account = req.query.account;
         var projectNo = req.query.projectNo;
         console.log(account, projectNo);
-        
-
-        request({ url: config.server + '/user/participateProject?projectNo=' + projectNo + '&account='+ account }, function(error, response, body) {
+        request({ url: config.server + '/user/participateProject?projectNo=' + projectNo + '&account=' + account }, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 body = JSON.parse(body);
-                console.log(body);
-                res.end();
+                if (body.ret) {
+                    var url = config.server + "/info/task/userAllTaskList?projectUniqNo=" + body.data + "&userAccount=" + account;
+                    console.log('2131231231321',url);
+                    return request(url, function(error, response, result) {
+                        if (!error && response.statusCode == 200) {
+                            result = JSON.parse(result);
+                            console.log(result)
+                            return res.json({ 'userAllTaskList': result.data.listCount });
+                        }
+                    })
+                }else{
+                    return res.json({ 'error': body.errmsg });
+                }
+                
             }
         })
-
-    }
+    },
+    
 }

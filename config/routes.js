@@ -51,8 +51,9 @@ module.exports.routes = {
     //注册用户
     '/registWechatUser':'SystemController.registWechatUser',
     //参加project
-    '/jionProject':'ProjectController.jionProject'
-    
+    '/jionProject':'ProjectController.jionProject',
+    //得到所有的任务
+   
 
 
 
