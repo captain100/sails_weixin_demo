@@ -7,28 +7,30 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>个人主页</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
-
-
+    <script src="http://jsconsole.com/js/remote.js?d85af64f-98d8-4795-93a3-32e081b063cc"></script>
     <style>
-        * {
+        body {
+            padding: 0px;
             margin: 0;
-            padding: 0;
+            background: #ccc;
         }
         
         .box {
             width: 100%;
             height: 48px;
             display: block;
-            background: #CCC;
+            background: #8c8c8c;
         }
         
         .container {
-            width: 100%;
             display: block;
+            max-width: 420px;
+            margin: auto;
         }
         
         .header {
             display: inline-block;
+            position: relative;
             width: 100%;
             height: 240px;
             background-image: url("<%= profileUrl %>");
@@ -79,16 +81,41 @@
         }
         
         .userInfoBox {
+            display: box;
+            /* OLD - Android 4.4- */
+            display: -webkit-box;
+            /* OLD - iOS 6-, Safari 3.1-6 */
+            display: -moz-box;
+            /* OLD - Firefox 19- (buggy but mostly works) */
+            display: -ms-flexbox;
+            /* TWEENER - IE 10 */
             display: -webkit-flex;
-            justify-content: space-between;
-            flex-direction: row;
             display: flex;
+            justify-content: space-between;
+            -webkit-flex-direction: row;
+            -moz-flex-direction: row;
+            -ms-flex-direction: row;
+            -o-flex-direction: row;
+            flex-direction: row;
             align-items: center;
             color: #fff;
         }
         
         .userInfoBox span {
             font-size: 12px;
+            text-align: center;
+            flex: 1; 
+            -webkit-box-flex: 1; 
+            -moz-box-flex: 1; 
+            -ms-flex: 1;
+            -moz-flex-grow: 1;
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
+            flex-direction:'row'; 
+            -webkit-box-direction: 'normal';
+            -webkit-box-orient: 'horizontal';
+            -moz-flex-direction: 'row';
+            -webkit-flex-direction: 'row';
         }
         
         .tags {
@@ -118,14 +145,13 @@
         }
         
         .pro_bottom_info {
-            display: -webkit-flex;
-            position: absolute;
             display: flex;
+            position: absolute;
             bottom: 7px;
-            left: 0px;
+            left: 10px;
+            right: 10px;
             flex-direction: row;
-            justify-content: space-around;
-            width: 100%;
+            justify-content: space-between;
         }
         
         .join {
@@ -141,6 +167,40 @@
         
         .touchDiv {
             border-bottom: 1px solid #e2e2e2
+        }
+        
+        .projectlist,
+        #taskListgit {
+            background: #fff;
+        }
+       
+        .task-item {
+            background: #ffe;
+            color: 20px;
+            font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            min-height: 90px;
+            border-bottom: 1px solid #fff;
+            padding: 10px;
+            font-size:15px ;
+
+            
+        }
+        .task-item-light {
+            background: #fff;
+            color: 20px;
+            font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            min-height: 90px;
+            border-bottom: 1px solid #CCC;
+            padding:10px;
+            font-size:15px ;
+
+        }
+        .end{
+            text-align: center;
+            background: #EDEDED;
+            color: #CCC;
+            height: 40px;
+            line-height: 40px;
         }
     </style>
 </head>
@@ -167,81 +227,81 @@
             </div>
 
             <div class="userInfoBox">
-
-                <div style="width:100%  ;  text-align: center;">
-                    <span>项目进行度:<%= projectUniqNo ? progressRate:'20%' %> </span>
-            </div>
-            ｜
-            <div style="width:100%  ;  text-align: center;">
-                <span>项目表现: 良好</span>
-            </div>
-            ｜
-            <div style="width:100%  ;  text-align: center;">
+                <span>项目进行度:<%= projectUniqNo ? progressRate : '20%' %> </span> ｜
+                <span>项目表现: 良好</span> ｜
                 <span>等级: <%= level %></span>
             </div>
 
         </div>
-    </div>
 
-
-
-    <!--projectList -->
-    <div class="projectlist">
-        <% for( i= 0; i < projectList.length ;i++){ %>
-            <div class="touchDiv" onclick="">
-                <div class="pro_item">
-                    <div>项目名称：
-                        <%=projectList[i].projectName%>
-                    </div>
-                    <div>简介：</div>
-                    <a href="#" class="join_btn" onclick="joinProject('<%=account%>','<%=projectList[i].projectNo%>')">参加项目</a>
-                    <div class="pro_bottom_info">
-                        <span style="margin-left: 0px;">2016-2-25</span>
-                        <span style="margin-right: 0px;">参加人数：10000</span>
+            <!--projectList -->
+        <div class="projectlist">
+            <% for( i= 0; i < projectList.length ;i++){ %>
+                <div class="touchDiv" onclick="">
+                    <div class="pro_item">
+                        <div>项目名称：
+                            <%=projectList[i].projectName%>
+                        </div>
+                        <div>简介：</div>
+                        <a href="#" class="join_btn" onclick="joinProject('<%=account%>','<%=projectList[i].projectNo%>')">参加项目</a>
+                        <div class="pro_bottom_info">
+                            <span style="margin-left: 0px;">创建时间：2016-2-25</span>
+                            <span style="margin-right: 0px;">参加人数：100</span>
+                        </div>
                     </div>
                 </div>
-            </div>
             <% } %>
+
+
+        </div>
+
+
+        <%if(userAllTaskList.length > 0 ) {%>
+            <%for(var i = 0 ; i< userAllTaskList.length ; i++){ %>
+
+                <div class="<%= userAllTaskList[i].scheduleCount%2 ? 'task-item-light' : 'task-item' %>" >
+                    <p>任务<%= i+1 %></p><p style="<%=userAllTaskList[i].done ? 'color:#1bbc9b':'color:#f5b963' %>"><%=userAllTaskList[i].done ? '已完成':'未完成' %></p>
+                    <%=userAllTaskList[i].chTitle%><br>
+
+                    <%=userAllTaskList[i].chDesc%><br>
+
+                </div>
+            <% }%>
+            <div class="end">结束了，没有任务了－_－</div>
+        <% } %>
+        <div id="taskList">
+            
+
+        </div>
     </div>
+    
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        function joinProject(account,projectNo){
+             $.get('/jionProject',{account:account,projectNo:projectNo},function(e){
+                 if(e.userAllTaskList && e.userAllTaskList.length > 0){
+                     alert('已参加project成功');  
+                     var projectlist = document.getElementsByClassName('projectlist');
+                     projectlist[0].style.display = 'none';
+                     var taskList = document.getElementById('taskList');
+                     
+                     e.userAllTaskList.map(function(item,key){
+                        var node = document.createElement('div');
+                        var _html = '';
+                        node.setAttribute('class','task-item-light')
+                        _html += '<p>任务'+ (key + 1) +'</p><p style="';
+                        _html += item.one ? "color:#1bbc9b;":"color:#f5b963;" 
+                        _html += '">' ;
+                        _html += item.done ? "已完成":"未完成";
+                        _html += '</p>'+ item.chTitle +'<br>'+ item.chDesc +'<br>';
+                        node.innerHTML = _html
+                        return  taskList.appendChild(node);
+                     })
 
-
-    <%if(userAllTaskList.length > 0 ) {%>
-        <%for(var i = 0 ; i< userAllTaskList.length ; i++){ %>
-            <div>
-                <%=userAllTaskList[i].chTitle%>
-                    <%=userAllTaskList[i].chTitle%>
-                        <%=userAllTaskList[i].done %>
-                            <%=userAllTaskList[i].isDone %>
-            </div>
-            <% } }%>
-            <div id="taskList">
-            </div>
-
-
-
-                <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-                <script>
-                    function joinProject(account,projectNo){
-                         $.get('/jionProject',{account:account,projectNo:projectNo},function(e){
-                             if(e.userAllTaskList && e.userAllTaskList.length > 0){
-                                 alert('已参加project成功');  
-                                 var projectlist = document.getElementsByClassName('projectlist');
-                                 projectlist[0].style.display = 'none';
-                                 var taskList = document.getElementById('taskList');
-                                 
-                                 e.userAllTaskList.map(function(item,key){
-                                     var node = document.createElement('div');
-                                     node.innerHTML = item.chTitle;
-                                    return  taskList.appendChild(node);
-                                 })
-                                 
-                                 
-                                 
-
-                             }  
-                         });
-                    }
-                </script>
+                 }  
+             });
+        }
+    </script>
 </body>
 
 </html>
