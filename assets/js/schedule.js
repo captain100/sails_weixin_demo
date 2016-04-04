@@ -4,8 +4,11 @@
 $(function(){
     $(".shijian").click(function(){
         var collpase = $(this).attr('data-href');
-        //alert(collpase);
+        var _html = $('.mytest').attr('data-value');
+        $('.mytest').html( _html);
         $(collpase).collapse('toggle');
+        // $('.mytest').val()
+
     })
     // $('.updateType').click(function(){
 
@@ -17,4 +20,8 @@ $(function(){
     // 	})
         
     // })
+   
+    
+
+
 });

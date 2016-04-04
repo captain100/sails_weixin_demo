@@ -55,13 +55,9 @@
         <div id="collapse<%= i %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= i %>">
             <div class="panel-body">
 
-                <section>
-                    <%= list[i].chDesc %>
-                    <div>啊史蒂夫会堵塞佛哈市地方好大赛发生啊计划开始地方哈斯 u 的复活赛堵费阿萨德发回阿萨德会发生的佛 i 撒</div><div>1.ashdfiuhasdf</div>
-                    <div>2.觉得寺佛教啊谁都发觉</div><div>3.ahsduifhads</div>
-                </section>
-                
-                
+                <section class='mytest' data-value="<%=list[i].chDesc %>">
+                    
+                </section> 
                 <br>
                 <% if (list[i].type == 'alert' && !list[i].isDone ){ %>
                 <div class="action-controller ">
