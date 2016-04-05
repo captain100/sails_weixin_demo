@@ -43,7 +43,7 @@ module.exports = {
                     return request(url, function(error, response, result) {
                         if (!error && response.statusCode == 200) {
                             result = JSON.parse(result);
-                            console.log(result)
+                            // console.log(result)
                             return res.json({ 'userAllTaskList': result.data.listCount });
                         }
                     })
@@ -54,5 +54,22 @@ module.exports = {
             }
         })
     },
+    'cancelProject': function(req,res){
+        var account = req.query.account;
+        var projectNo = req.query.projectNo;
+
+        request({ url: config.server + '/user/quitProject?projectUniqNo='+projectNo +'&userAccount=' + account }, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                console.log(account+' ------'+ projectNo)
+                if (body.ret) {
+                   return res.json({'success':'退出'})
+                }else{
+                    return res.json({ 'error': body.errmsg });
+                }
+                
+            }
+        })
+    }
     
 }

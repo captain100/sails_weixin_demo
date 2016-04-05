@@ -31,7 +31,6 @@
             display: inline-block;
             position: relative;
             width: 100%;
-            height: 240px;
             background-image: url("<%= profileUrl %>");
             background-size: cover;
             background-position: 50% 50%;
@@ -56,7 +55,7 @@
             height: 240px;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
         }
         
         .header .authorIcon {
@@ -201,6 +200,26 @@
             height: 40px;
             line-height: 40px;
         }
+        .outProject{
+            background: #000;
+            text-align: center;
+            font-size: 15px;
+            padding:5px;
+            color:#fff;
+            margin: auto
+
+        }
+        .over{
+            width: 100%;
+            height: 60px;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+            font-size: 20px;
+            background: #fff;
+            line-height: 60px;
+
+
+        }
     </style>
 </head>
 
@@ -225,13 +244,15 @@
                 <span>参加的项目: <%= projectUniqNo ? projectName : '你还未参加项目' %><span>
             </div>
 
-            <div class="userInfoBox">
+            <!-- <div class="userInfoBox">
                 <span>项目进行度:<%= projectUniqNo ? progressRate : '20%' %> </span> ｜
                 <span>项目表现: 良好</span> ｜
                 <span>等级: <%= level %></span>
-            </div>
+            </div> -->
+            
 
         </div>
+        <div class="over">项目完成度<%= projectUniqNo ? progressRate : '0%' %></div>
 
             <!--projectList -->
         <div class="projectlist">
@@ -266,24 +287,23 @@
 
                 </div>
             <% }%>
-            <div class="end">结束了，没有任务了－_－</div>
+            <div class="end">结束了，没有任务了－_－
+            <div onclick="cancel('<%=account%>','<%=projectUniqNo%>')" class="outProject">退出项目</div>
+            </div>
         <% } %>
-        <div id="taskList">
-            
-
-        </div>
+        <div id="taskList"></div>
+        
     </div>
     
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script>
         function joinProject(account,projectNo){
-             $.get('/jionProject',{account:account,projectNo:projectNo},function(e){
+            $.get('/jionProject',{account:account,projectNo:projectNo},function(e){
                  if(e.userAllTaskList && e.userAllTaskList.length > 0){
                      alert('已参加project成功');  
                      var projectlist = document.getElementsByClassName('projectlist');
                      projectlist[0].style.display = 'none';
                      var taskList = document.getElementById('taskList');
-                     
                      e.userAllTaskList.map(function(item,key){
                         var node = document.createElement('div');
                         var _html = '';
@@ -299,6 +319,13 @@
 
                  }  
              });
+        }
+
+        function cancel(account,projectNo){
+            $.get('/cancelProject', {account: account, projectNo : projectNo}, function(e){
+                WeixinJSBridge.invoke('closeWindow');
+            })
+
         }
     </script>
 </body>

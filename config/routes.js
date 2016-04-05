@@ -52,7 +52,9 @@ module.exports.routes = {
     '/registWechatUser':'SystemController.registWechatUser',
     //参加project
     '/jionProject':'ProjectController.jionProject',
-    //得到所有的任务
+    //退出项目
+    '/cancelProject':'ProjectController.cancelProject'
+
    
 
 
