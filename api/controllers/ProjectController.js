@@ -40,7 +40,6 @@ module.exports = {
                 body = JSON.parse(body);
                 if (body.ret) {
                     var url = config.server + "/info/task/userAllTaskList?projectUniqNo=" + body.data + "&userAccount=" + account;
-                    console.log('2131231231321',url);
                     return request(url, function(error, response, result) {
                         if (!error && response.statusCode == 200) {
                             result = JSON.parse(result);

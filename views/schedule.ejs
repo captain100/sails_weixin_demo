@@ -54,10 +54,7 @@
         </div>
         <div id="collapse<%= i %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= i %>">
             <div class="panel-body">
-
-                <section class='mytest' data-value="<%=list[i].chDesc %>">
-                    
-                </section> 
+                <div><%- list[i].chDesc %></div>
                 <br>
                 <% if (list[i].type == 'alert' && !list[i].isDone ){ %>
                 <div class="action-controller ">

@@ -165,7 +165,10 @@ module.exports = {
                     if (!error && response.statusCode == 200) {
                         info = JSON.parse(info);
                         // console.log(info)
-                        // res.render('schedule', {data: info.data});
+                        // info.data.listCount.map(function(item){
+                        //     console.log(item)
+                        //     return item.chDesc.replace(/&gt;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#39;/g, "\'").replace(/&quot;/g, "\"").replace(/<br>/g, "\n")
+                        // })
                         cb(null, info.data);
                     }
                 })
@@ -173,12 +176,13 @@ module.exports = {
             user: function(cb) {
                 api = new WechatAPI(config.APPID, config.APPSECRET);
                 api.getUser(userAccount, function(error, userInfo) {
-                    console.log(error + ' |  ' + userInfo)
+                    // console.log(error + ' |  ' + userInfo)
                     cb(null, userInfo);
                 });
             }
         }, function(error, result) {
             // console.log(result)
+
             res.render('schedule', result);
         })
     },

@@ -4,24 +4,9 @@
 $(function(){
     $(".shijian").click(function(){
         var collpase = $(this).attr('data-href');
-        var _html = $('.mytest').attr('data-value');
-        $('.mytest').html( _html);
+        
         $(collpase).collapse('toggle');
         // $('.mytest').val()
 
     })
-    // $('.updateType').click(function(){
-
-    // 	var taskNo = $(this).attr('data-taskNo'),
-    // 	userAccount = $(this).attr('data-userAccount');
-
-    // 	$.get('http://123.56.126.231:8080/info/task/userCommitTask?taskNo='+taskNo+'&userAccount='+userAccount,function(data){
-
-    // 	})
-        
-    // })
-   
-    
-
-
 });

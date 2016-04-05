@@ -262,7 +262,7 @@
                     <p>任务<%= i+1 %></p><p style="<%=userAllTaskList[i].done ? 'color:#1bbc9b':'color:#f5b963' %>"><%=userAllTaskList[i].done ? '已完成':'未完成' %></p>
                     <%=userAllTaskList[i].chTitle%><br>
 
-                    <div class="mytest" data-value="<%=userAllTaskList[i].chDesc%>"></div>
+                    <%－userAllTaskList[i].chDesc%>
 
                 </div>
             <% }%>
@@ -300,12 +300,6 @@
                  }  
              });
         }
-
-        window.onload(function(){
-            var test =  document.getElementsByClassName('mytest');
-            var testHtml = test.getAttribute('data-value');
-            test.innerHTML = testHtml;
-        })
     </script>
 </body>
 
