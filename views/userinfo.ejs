@@ -313,7 +313,7 @@
                         </div>
                     <% }%>
                     <div class="end">结束了，没有任务了－_－
-                    <div onclick="cancel('<%=account%>','<%=projectUniqNo%>')" class="outProject">退出项目</div>
+                    <div class="outProject" data-account="<%=account%>" data-projectUniqNo="<%=projectUniqNo%>" >退出项目</div>
                     </div>
                 <% } %> 
             </div>
@@ -374,11 +374,26 @@
                     showCancelButton: true,
                     confirmButtonColor: "#AEDEF4",
                     confirmButtonText: "sure",
-                    closeOnConfirm: false
+                    closeOnConfirm: true
                 }, function(){
                     return JoinProject(account, projectNo)
                 });
             });
+
+            $('.outProject').click(function () {
+                var account = $(this).attr('data-account')
+                var projectUniqNo = $(this).attr('data-projectUniqNo') 
+                swal({
+                    title: "你确定要要退出这个项目吗",
+                    text: "如果退出这个项目，将会导致你的数据丢失",
+                    showCancelButton: true,
+                    confirmButtonColor: "#AEDEF4",
+                    confirmButtonText: "outProject",
+                    closeOnConfirm: true
+                }, function(){
+                    return cancel(account, projectUniqNo)
+                })
+            })
 
         })
 

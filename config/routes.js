@@ -55,8 +55,4 @@ module.exports.routes = {
     //退出项目
     '/cancelProject':'ProjectController.cancelProject'
 
-   
-
-
-
 };
