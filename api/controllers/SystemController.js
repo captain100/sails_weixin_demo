@@ -320,7 +320,7 @@ module.exports = {
                 console.log(data.data);
                 return res.render('userinfo', {
                     account: 'oewo7wMrPRdkfCxLhkQ0qTTMyRME',
-                    nickName: 'fafa',
+                    nickName: 'qiushi',
                     sex: 1,
                     level: 10,
                     profileUrl: 'http://wx.qlogo.cn/mmopen/UAMuw0RfSYw9nDMRAB5owuPmyD9YmsuNYORtiaoIj1jRQWPK9mddibwRZUreR5KkS3JNn883SKQ1AVg4ueZf5ibVDicic3DJSj9Lb/0',
@@ -384,9 +384,15 @@ module.exports = {
                         },
                         {
                             "type": "click",
-                            "name": "立刻生成任务",
-                            "key": "CREAT_TASK_1",
+                            "name": "待做事项",
+                            "key": "CREAT_TASK_1"
                         },
+                        {
+                            "type":'view',
+                            "name": "联系医生",
+                            "url": url
+                        }
+
                     ]
                 };
                 api.createMenu(menu, function(err, result) {
