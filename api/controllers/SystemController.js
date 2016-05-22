@@ -17,18 +17,15 @@ module.exports = {
     heartqOl: function(req, res) {
         // console.log(sails.config);
         request.get({ url: config.server + '/info/paper/getPaperContent?paperId=' + req.query.paperId + '&taskNo=' + req.query.taskNo + '&userAccount=' + req.query.userAccount }, function(err, response, body) {
-            console.log(body);
             body = JSON.parse(body);
-            console.log(body.data);
-            res.render('heartq_test', { data: body.data });
+            res.render('heartq_test', { data: body.data, scheduleCount: body.data.scheduleCount });
         })
     },
     //提交试卷数据
     submitQuestion: function(req, res) {
-        var data = req.query.data;
+        var data = req.body;
         var json = JSON.stringify(data);
         json = JSON.parse(json);
-        // console.log(json);
         var options = {
             headers: {
                 'Content-Type': 'application/json',
@@ -180,7 +177,7 @@ module.exports = {
                 });
             }
         }, function(error, result) {
-            // console.log(result)
+            console.log(result)
 
             res.render('schedule', result);
         })
@@ -370,10 +367,10 @@ module.exports = {
 
     //修改微信公众账号的菜单栏
     updateWeixinMenu: function(req, res) {
-        // var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_userinfo');
-        // var aboutusUrl = client.getAuthorizeURL('http://www.cpzero.cn/aboutUs', 'STATE', 'snsapi_userinfo');
-        var url = client.getAuthorizeURL('http://gxqxv89xs6.proxy.qqbrowser.cc/userinfo', 'STATE', 'snsapi_userinfo');
-        var aboutusUrl = client.getAuthorizeURL('http://gxqxv89xs6.proxy.qqbrowser.cc/aboutUs', 'STATE', 'snsapi_userinfo');
+        var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_userinfo');
+        var aboutusUrl = client.getAuthorizeURL('http://www.cpzero.cn/aboutUs', 'STATE', 'snsapi_userinfo');
+        // var url = client.getAuthorizeURL('http://gxqxv89xs6.proxy.qqbrowser.cc/userinfo', 'STATE', 'snsapi_userinfo');
+        // var aboutusUrl = client.getAuthorizeURL('http://gxqxv89xs6.proxy.qqbrowser.cc/aboutUs', 'STATE', 'snsapi_userinfo');
         console.log(url)
         api = new WechatAPI(config.APPID, config.APPSECRET);
         api.removeMenu(function(err, result) {
@@ -382,17 +379,17 @@ module.exports = {
                     "button": [
                         {
                             "type": "view",
-                            "name": "个人主页",
+                            "name": "Home Page",
                             "url": url
                         },
                         {
                             "type": "click",
-                            "name": "待做事项",
+                            "name": "Current Tasks",
                             "key": "CREAT_TASK_1"
                         },
                         {
                             "type":'view',
-                            "name": "联系医生",
+                            "name": "Contact us",
                             "url": aboutusUrl
                         }
 

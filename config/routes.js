@@ -24,7 +24,7 @@ module.exports.routes = {
     //SystemController
     'all /': 'SystemController.showExpress',
     'get /heartqOl': 'SystemController.heartqOl',
-    'get /subPaper': 'SystemController.submitQuestion',
+    'post /subPaper': 'SystemController.submitQuestion',
     'get /admin': 'SystemController.showAdmin',
     'get /new':'SystemController.createQuestion', 
     'get /getQuestion':'SystemController.findQuestion',
