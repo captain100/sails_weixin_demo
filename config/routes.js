@@ -53,6 +53,8 @@ module.exports.routes = {
     //参加project
     '/jionProject':'ProjectController.jionProject',
     //退出项目
-    '/cancelProject':'ProjectController.cancelProject'
+    '/cancelProject':'ProjectController.cancelProject',
+    // 联系我们
+    '/aboutUs':'SystemController.aboutUs'
 
 };

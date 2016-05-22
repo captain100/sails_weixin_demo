@@ -293,21 +293,42 @@
 
             <div class="row animated fadeInRight">
                 <%if(userAllTaskList.length > 0 ) {%>
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h5>项目完成度</h5>
+                                <h2><%=progressRate%></h2>
+                                <div class="progress progress-mini">
+                                    <div style="width: <%=progressRate%>" class="progress-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <%for(var i = 0 ; i< userAllTaskList.length ; i++){ %>
                         <div class="col-lg-12">
                             <div class="ibox float-e-margins">
-                                <div class="ibox-content profile-content">
-                                    <h4><strong>任务<%= i+1 %></strong></h4>
-                                    <p><%=userAllTaskList[i].done ? '已完成':'未完成' %></p>
-                                    <h5>
-                                        title
-                                    </h5>
-                                    <p>
-                                        <%=userAllTaskList[i].chTitle%>
-                                    </p>
-                                    <p>
-                                        <%-userAllTaskList[i].chDesc%>
-                                    </p>
+                                <div class="ibox-title">
+                                    <h5>任务<%= i+1 %></h5>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="ibox-content profile-content">
+                                        <h4><strong><%=userAllTaskList[i].done ? '已完成':'未完成' %></strong></h4>
+                                        <h5>
+                                            title
+                                        </h5>
+                                        <p>
+                                            <%=userAllTaskList[i].chTitle%>
+                                        </p>
+                                        <p>
+                                            <%-userAllTaskList[i].chDesc%>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -404,7 +425,32 @@
                     e.userAllTaskList.map(function(item, key){
                         var node = $('<div></div>')
                         node.addClass('col-lg-12')
-                        var ibox = $('<div class="ibox float-e-margins"><div class="ibox-content profile-content"><h4><strong>任务' + (key + 1) + '</strong></h4><p>' + item.done ? "已完成":"未完成" +'</p><h5>title</h5><p>'+ item.chTitle +'</p><p>' + item.chDesc +'</p></div></div>')
+                        var _html = ""
+                        _html += '<div class="ibox float-e-margins">'
+                        _html += '<div class="ibox-title">'
+                        _html += '<h5>任务' + (key+1) + '</h5>'
+                        _html += '<div class="ibox-tools">'
+                        _html += '<a class="collapse-link">'
+                        _html += '<i class="fa fa-chevron-up"></i>'
+                        _html += '</a>'
+                        _html += '<a class="dropdown-toggle" data-toggle="dropdown" href="#">'
+                        _html += '</div>'
+                        _html += '</div>'
+                        _html += '<div>'
+                        _html += '<div class="ibox-content profile-content">'
+                        _html += '<h4><strong>' + item.done ? "已完成":"未完成" +'</strong></h4>'
+                        _html += '<h5>'
+                        _html += 'title'
+                        _html += '</h5>'
+                        _html += '<p>'
+                        _html += item.chTitle
+                        _html += '</p>'
+                        _html += '<p>'
+                        _html += item.chDesc
+                        _html += '</p>'
+                        _html += '</div>'
+                        _html += '</div>'
+                        var ibox = $(_html)
                         ibox.appendTo(node)
                         node.appendTo($('.hasSelectProject'))
                     })

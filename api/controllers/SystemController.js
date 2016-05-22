@@ -365,7 +365,9 @@ module.exports = {
             });
 
     },
-
+    aboutUs: function(req,res){
+        res.render('aboutus')
+    },
 
     //修改微信公众账号的菜单栏
     updateWeixinMenu: function(req, res) {
