@@ -25,8 +25,7 @@ $(function() {
             'paperId':paperId,
             'answers':answers
         };
-        var flag = confirm('确认是否提交？');
-        console.log(flag);
+        var flag = confirm('Are you sure');
         if(flag){            
             $.ajax('/subPaper',{type:'post', data:data },function(){
                 return window.location.href='http://www.cpzero.cn/schedule?userAccount='+e.info.data.userAccount+'&projectUniqNo='+e.info.data.projectUniqNo+'&scheduleCount='+scheduleCount;
