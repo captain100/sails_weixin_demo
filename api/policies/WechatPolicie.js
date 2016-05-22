@@ -30,7 +30,7 @@ module.exports = function (req, res, next) {
 
         } else {
             res.reply({
-                content: '欢迎你加入由XX公司提供的XX试验。在此之前请确认你是否已经在你的主治医师的指导下签署书面合同已经签署请\n否则请联系你的主治医师',
+                content: 'Welcome to WeHEOR. Please make sure that you have assigned the agreement under the instruction of your doctor. If not, please contact your doctor.',
                 type: 'text'
             });
         }

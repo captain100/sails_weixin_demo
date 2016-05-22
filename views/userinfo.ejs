@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
     <link href="stylesheets/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 
-    <title>个人主页</title>
+    <title>Home Page</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <style>
         body {
@@ -202,22 +202,6 @@
             font-size:15px ;
 
         }
-        .end{
-            text-align: center;
-            background: #EDEDED;
-            color: #CCC;
-            height: 40px;
-            line-height: 40px;
-        }
-        .outProject{
-            background: #000;
-            text-align: center;
-            font-size: 15px;
-            padding:5px;
-            color:#fff;
-            margin: auto
-
-        }
         .over{
             width: 100%;
             height: 60px;
@@ -226,11 +210,12 @@
             font-size: 20px;
             background: #fff;
             line-height: 60px;
-
-
         }
         .row{
             margin:0;
+        }
+        .col-lg-12 {
+            padding: 0;
         }
     </style>
 </head>
@@ -242,7 +227,7 @@
                 <h2><%= nickName %></h2>
                 <ol class="breadcrumb">
                     <li>
-                        <span>参加的项目: <%= projectUniqNo ? projectName : '你还未参加项目' %><span>
+                        <span class="projectNameStr"><%= projectUniqNo ? 'My project: ' + projectName : 'You have not particiapted any project. Please choose one from the following projects.' %><span>
                     </li>
                 </ol>
             </div>
@@ -286,7 +271,6 @@
                 <% } %>
             </div>
             <div class="row animated fadeInRight hasSelectProject">
-
             </div>
 
             <!-- 加入项目 -->
@@ -296,7 +280,7 @@
                     <div class="col-lg-12">
                         <div class="ibox">
                             <div class="ibox-content">
-                                <h5>项目完成度</h5>
+                                <h5>Project Completion Progress</h5>
                                 <h2><%=progressRate%></h2>
                                 <div class="progress progress-mini">
                                     <div style="width: <%=progressRate%>" class="progress-bar"></div>
@@ -308,23 +292,23 @@
                         <div class="col-lg-12">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    <h5>任务<%= i+1 %></h5>
-                                    <div class="ibox-tools">
-                                        <a class="collapse-link">
+                                    <h5>Task <%= i+1 %></h5>
+                                    <div class="ibox-tools ">
+                                        <a class="collapse-link pull-right">
                                             <i class="fa fa-chevron-up"></i>
                                         </a>
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <%if(userAllTaskList[i].done){%>
+                                         <label class="label label-primary pull-right">Completed</label>
+                                        <% } else {%> 
+                                         <label class="label label-warning pull-right">Pending</label>
+                                        <%} %>
                                     </div>
                                 </div>
                                 <div>
                                     <div class="ibox-content profile-content">
-                                        <h4><strong><%=userAllTaskList[i].done ? '已完成':'未完成' %></strong></h4>
                                         <h5>
-                                            title
-                                        </h5>
-                                        <p>
                                             <%=userAllTaskList[i].chTitle%>
-                                        </p>
+                                        </h5>
                                         <p>
                                             <%-userAllTaskList[i].chDesc%>
                                         </p>
@@ -333,8 +317,11 @@
                             </div>
                         </div>
                     <% }%>
-                    <div class="end">结束了，没有任务了－_－
-                    <div class="outProject" data-account="<%=account%>" data-projectUniqNo="<%=projectUniqNo%>" >退出项目</div>
+                    <div class="col-lg-12 ">
+                        <h5 class="text-center">
+                            No More Tasks
+                        </h5> 
+                        <button type="button" class="outProject btn btn-block btn-w-m btn-success" data-account="<%=account%>" data-projectUniqNo="<%=projectUniqNo%>">Quit Project</button>
                     </div>
                 <% } %> 
             </div>
@@ -357,8 +344,8 @@
         <script src="js/plugins/flot/curvedLines.js"></script>
 
         <!-- Peity -->
-        <script src="js/plugins/peity/jquery.peity.min.js"></script>
-        <script src="js/demo/peity-demo.js"></script>
+        <!-- <script src="js/plugins/peity/jquery.peity.min.js"></script> -->
+        <!-- <script src="js/demo/peity-demo.js"></script> -->
 
         <!-- Custom and plugin javascript -->
         <script src="js/inspinia.js"></script>
@@ -377,8 +364,6 @@
         <!-- Sparkline demo data  -->
         <script src="js/demo/sparkline-demo.js"></script>
 
-        <!-- ChartJS-->
-        <script src="js/plugins/chartJs/Chart.min.js"></script>
         <!-- Sweet alert -->
         <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
@@ -390,11 +375,12 @@
                 var projectNo = $(this).attr('data-projectNo')
                 console.log(account, projectNo)
                 swal({
-                    title: "你确定要加入这个项目吗",
-                    text: "如果加入这个项目，就不能同时参加别的项目",
+                    title: "Are you sure?",
+                    text: "You can participate only one project at the same time.",
                     showCancelButton: true,
                     confirmButtonColor: "#AEDEF4",
-                    confirmButtonText: "sure",
+                    confirmButtonText: "yes",
+                    cancelButtonText:"no",
                     closeOnConfirm: true
                 }, function(){
                     return JoinProject(account, projectNo)
@@ -405,11 +391,11 @@
                 var account = $(this).attr('data-account')
                 var projectUniqNo = $(this).attr('data-projectUniqNo') 
                 swal({
-                    title: "你确定要要退出这个项目吗",
-                    text: "如果退出这个项目，将会导致你的数据丢失",
+                    title: "Are you sure?",
                     showCancelButton: true,
                     confirmButtonColor: "#AEDEF4",
-                    confirmButtonText: "outProject",
+                    confirmButtonText: "yes",
+                    cancelButtonText:"no",
                     closeOnConfirm: true
                 }, function(){
                     return cancel(account, projectUniqNo)
@@ -422,29 +408,27 @@
             $.get('/jionProject', {account:account,projectNo:projectNo}, function(e) {
                 if (e.userAllTaskList && e.userAllTaskList.length > 0) {
                     $('.hasNoproject').hide()
+                    $('.projectNameStr').text(e.projectName)
                     e.userAllTaskList.map(function(item, key){
                         var node = $('<div></div>')
                         node.addClass('col-lg-12')
                         var _html = ""
                         _html += '<div class="ibox float-e-margins">'
                         _html += '<div class="ibox-title">'
-                        _html += '<h5>任务' + (key+1) + '</h5>'
+                        _html += '<h5>Task' + (key+1) + '</h5>'
                         _html += '<div class="ibox-tools">'
-                        _html += '<a class="collapse-link">'
+                        _html += '<a class="collapse-link pull-right">'
                         _html += '<i class="fa fa-chevron-up"></i>'
                         _html += '</a>'
                         _html += '<a class="dropdown-toggle" data-toggle="dropdown" href="#">'
+                        _html += item.done ? '<label class="label label-primary pull-right">Completed</label>':'<label class="label label-warning pull-right">Pending</label>'
                         _html += '</div>'
                         _html += '</div>'
                         _html += '<div>'
                         _html += '<div class="ibox-content profile-content">'
-                        _html += '<h4><strong>' + item.done ? "已完成":"未完成" +'</strong></h4>'
                         _html += '<h5>'
-                        _html += 'title'
-                        _html += '</h5>'
-                        _html += '<p>'
                         _html += item.chTitle
-                        _html += '</p>'
+                        _html += '</h5>'
                         _html += '<p>'
                         _html += item.chDesc
                         _html += '</p>'

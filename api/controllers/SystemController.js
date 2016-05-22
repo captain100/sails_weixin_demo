@@ -41,7 +41,6 @@ module.exports = {
         };
         request(options, function(error, response, data) {
             if (!error && response.statusCode == 200) {
-                console.log('----info------', data);
                 res.json(200, { info: data });
             }
         });
@@ -372,7 +371,9 @@ module.exports = {
     //修改微信公众账号的菜单栏
     updateWeixinMenu: function(req, res) {
         // var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_userinfo');
+        // var aboutusUrl = client.getAuthorizeURL('http://www.cpzero.cn/aboutUs', 'STATE', 'snsapi_userinfo');
         var url = client.getAuthorizeURL('http://gxqxv89xs6.proxy.qqbrowser.cc/userinfo', 'STATE', 'snsapi_userinfo');
+        var aboutusUrl = client.getAuthorizeURL('http://gxqxv89xs6.proxy.qqbrowser.cc/aboutUs', 'STATE', 'snsapi_userinfo');
         console.log(url)
         api = new WechatAPI(config.APPID, config.APPSECRET);
         api.removeMenu(function(err, result) {
@@ -392,7 +393,7 @@ module.exports = {
                         {
                             "type":'view',
                             "name": "联系医生",
-                            "url": url
+                            "url": aboutusUrl
                         }
 
                     ]
