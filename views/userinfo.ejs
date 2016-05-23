@@ -217,6 +217,9 @@
         .col-lg-12 {
             padding: 0;
         }
+        .hasSelectProject{
+            display: none;
+        }
     </style>
 </head>
 
@@ -241,13 +244,12 @@
                         <div class="ibox-title">
                             <h5><%=projectList[i].projectName%></h5>
                             <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
+                                <a data-toggle="collapse" data-target="#project<%=i%>" >
+                                    <i class="fa fa-chevron-down"></i>
                                 </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             </div>
                         </div>
-                        <div>
+                        <div id="project<%=i%>" class="collapse">
                             <div class="ibox-content profile-content">
                                 <h5><strong>Create Time</strong></h5>
                                 <p><%=projectList[i].createTime%></p>
@@ -294,8 +296,8 @@
                                 <div class="ibox-title">
                                     <h5>Task <%= i+1 %></h5>
                                     <div class="ibox-tools ">
-                                        <a class="collapse-link pull-right">
-                                            <i class="fa fa-chevron-up"></i>
+                                        <a class="pull-right" data-toggle="collapse" data-target="#demo<%=i%>">
+                                            <i class="fa fa-chevron-down"></i>
                                         </a>
                                         <%if(userAllTaskList[i].done){%>
                                          <label class="label label-primary pull-right">Completed</label>
@@ -304,7 +306,7 @@
                                         <%} %>
                                     </div>
                                 </div>
-                                <div>
+                                <div id="demo<%=i%>" class="collapse">
                                     <div class="ibox-content profile-content">
                                         <h5>
                                             <%=userAllTaskList[i].chTitle%>
@@ -408,6 +410,7 @@
             $.get('/jionProject', {account:account,projectNo:projectNo}, function(e) {
                 if (e.userAllTaskList && e.userAllTaskList.length > 0) {
                     $('.hasNoproject').hide()
+                    $('.hasSelectProject').show()
                     $('.projectNameStr').text(e.projectName)
                     e.userAllTaskList.map(function(item, key){
                         var node = $('<div></div>')
@@ -417,14 +420,13 @@
                         _html += '<div class="ibox-title">'
                         _html += '<h5>Task' + (key+1) + '</h5>'
                         _html += '<div class="ibox-tools">'
-                        _html += '<a class="collapse-link pull-right">'
-                        _html += '<i class="fa fa-chevron-up"></i>'
+                        _html += '<a class="pull-right" data-toggle="collapse" data-target="#new'+ key +'">'
+                        _html += '<i class="fa fa-chevron-down"></i>'
                         _html += '</a>'
-                        _html += '<a class="dropdown-toggle" data-toggle="dropdown" href="#">'
                         _html += item.done ? '<label class="label label-primary pull-right">Completed</label>':'<label class="label label-warning pull-right">Pending</label>'
                         _html += '</div>'
                         _html += '</div>'
-                        _html += '<div>'
+                        _html += '<div id="new'+ key +'" class="collapse">'
                         _html += '<div class="ibox-content profile-content">'
                         _html += '<h5>'
                         _html += item.chTitle
