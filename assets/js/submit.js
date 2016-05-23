@@ -26,9 +26,18 @@ $(function() {
             'answers':answers
         };
         var flag = confirm('Are you sure');
-        if(flag){            
-            $.ajax('/subPaper',{type:'post', data:data },function(){
-                return window.location.href='http://www.cpzero.cn/schedule?userAccount='+e.info.data.userAccount+'&projectUniqNo='+e.info.data.projectUniqNo+'&scheduleCount='+scheduleCount;
-            })
+        if(flag){
+            $.ajax({
+                url: '/subPaper',
+                type: 'post',
+                data:data,
+                dataType: "json",
+                success: function(e){
+                    return window.location.href='http://www.cpzero.cn/schedule?userAccount='+e.info.data.userAccount+'&projectUniqNo='+e.info.data.projectUniqNo+'&scheduleCount='+scheduleCount;
+                },
+                error: function(e){
+                    return window.location.href='http://www.cpzero.cn/schedule?userAccount='+e.info.data.userAccount+'&projectUniqNo='+e.info.data.projectUniqNo+'&scheduleCount='+scheduleCount;
+                }
+            })            
         }})
 })
