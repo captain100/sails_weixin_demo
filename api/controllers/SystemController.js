@@ -33,7 +33,6 @@ module.exports = {
     },
     //获取试卷数据信息
     heartqOl: function(req, res) {
-        // console.log(sails.config);
         request.get({ url: config.server + '/info/paper/getPaperContent?paperId=' + req.query.paperId + '&taskNo=' + req.query.taskNo + '&userAccount=' + req.query.userAccount }, function(err, response, body) {
             body = JSON.parse(body);
             res.render('heartq_test', { data: body.data, scheduleCount: body.data.scheduleCount });

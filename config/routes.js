@@ -22,7 +22,6 @@
 
 module.exports.routes = {
     //SystemController
-    'all /:filename?': 'SystemController.showExpress',
     'get /heartqOl': 'SystemController.heartqOl',
     'post /subPaper': 'SystemController.submitQuestion',
     'get /admin': 'SystemController.showAdmin',
@@ -55,5 +54,6 @@ module.exports.routes = {
     //退出项目
     '/cancelProject':'ProjectController.cancelProject',
     // 联系我们
-    '/aboutUs':'SystemController.aboutUs'
+    '/aboutUs':'SystemController.aboutUs',
+    'all /:filename?': 'SystemController.showExpress'
 };
