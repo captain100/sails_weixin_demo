@@ -26,8 +26,11 @@ module.exports = {
                 }
             })
         }
-        res.render('showPage');
-    }
+        else {
+            res.render('showPage');
+
+        }
+    },
     //获取试卷数据信息
     heartqOl: function(req, res) {
         // console.log(sails.config);
