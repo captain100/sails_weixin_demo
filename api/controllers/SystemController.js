@@ -10,11 +10,7 @@ var client = new OAuth('wxb4fb29266130bb85', '675f1cd7edfcaba17b987c44c83e0a6b')
 module.exports = {
     //访问网站首页
     showExpress: function(req, res) {
-        res.render('showPage');
-    },
-    getMP: function(req, res){
         if (req.params.filename) {
-
             fs.exists(req.params.filename, function(exists) {
                 if (exists) {
                     fs.readFile(req.params.filename, 'binary', function(err, file) { 
@@ -30,7 +26,8 @@ module.exports = {
                 }
             })
         }
-    },
+        res.render('showPage');
+    }
     //获取试卷数据信息
     heartqOl: function(req, res) {
         // console.log(sails.config);

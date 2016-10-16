@@ -55,8 +55,5 @@ module.exports.routes = {
     //退出项目
     '/cancelProject':'ProjectController.cancelProject',
     // 联系我们
-    '/aboutUs':'SystemController.aboutUs',
-
-    // 微信MP 认证
-    'all /mp/:filename':'SystemController.getMP'
+    '/aboutUs':'SystemController.aboutUs'
 };
