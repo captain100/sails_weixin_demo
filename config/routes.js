@@ -22,7 +22,7 @@
 
 module.exports.routes = {
     //SystemController
-    'all /': 'SystemController.showExpress',
+    'all /:filename?': 'SystemController.showExpress',
     'get /heartqOl': 'SystemController.heartqOl',
     'post /subPaper': 'SystemController.submitQuestion',
     'get /admin': 'SystemController.showAdmin',
