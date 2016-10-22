@@ -261,8 +261,7 @@ module.exports = {
                 })
             }
         ], function(err, result) {
-            console.log('====================',result)
-            
+            console.log(err, result)
             if (result.projectData.status === 1) {
                 //创建完没选projec
                 console.log('跳转倒选择projec');
@@ -305,7 +304,6 @@ module.exports = {
                     return request(url, function(error, response, result) {
                         if (!error && response.statusCode == 200) {
                             result = JSON.parse(result);
-                            console.log(result)
                             // return res.json({ 'userAllTaskList': result.data.listCount });
                             return res.render('userinfo', {
                                     account: userInfo.openid,
