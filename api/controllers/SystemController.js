@@ -1,4 +1,4 @@
-    var request = require('request');
+var request = require('request');
 var async = require('async');
 var fs   = require('fs');
 var WechatAPI = require('wechat-api');
@@ -234,8 +234,6 @@ module.exports = {
         async.waterfall([
             function(cb) {
                 client.getAccessToken(req.query.code, function(err, result) {
-                    console.log('------------------------')
-                    console.log(err, result)
                     var accessToken = result.data.access_token;
                     var openid = result.data.openid;
                     console.log('openid', openid);
@@ -243,15 +241,15 @@ module.exports = {
                 });
             },
             function(openid, cb) {
-                console.log('openid==', openid);
                 client.getUser(openid, function(err, userInfo) {
-                    console.log('userInfo', userInfo);
                     return cb(err, userInfo);
                 });
             },
             function(userInfo, cb) {
                 var url = config.server + "/user/showUserDetail?account=" + userInfo.openid + "&nickName=" + userInfo.nickname;
+                console.log(url)
                 request.get(url, function(err, response, body) {
+                    console.log(err, response, body)
                     if (!err && response.statusCode == 200) {
                         var userinfo = {
                             projectData: JSON.parse(body).data,
@@ -263,9 +261,9 @@ module.exports = {
                 })
             }
         ], function(err, result) {
-            console.log(result)
+            console.log('====================',result)
             
-            if (!result.projectData && result.projectData.status === 1) {
+            if (result.projectData.status === 1) {
                 //创建完没选projec
                 console.log('跳转倒选择projec');
                 var userInfo = result.userInfo;
@@ -290,7 +288,7 @@ module.exports = {
                     }
                 });
 
-            } else if (!result.projectData && result.projectData.status === 3) {
+            } else if (result.projectData.status === 3) {
                 //当前是个新用户要先创建再选择
                 return res.redirect('/registWechatUser?account=' + result.userInfo.openid +
                     '&nickName=' + result.userInfo.nickname +
