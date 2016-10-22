@@ -7,6 +7,7 @@ var wechat_config = {
 };
 
 module.exports = function (req, res, next) {
+    var i = 1
     wechat(wechat_config, function (req, res, next) {
         // console.log(11111111111);
         // 微信输入信息都在req.weixin上
@@ -17,16 +18,12 @@ module.exports = function (req, res, next) {
             res.reply('hehe');
 
         } else if (message.Event === 'CLICK' && message.EventKey === 'CREAT_TASK_1') {
+
             var openid = message.FromUserName;
             request('http://www.cpzero.cn/createTask?openid=' + openid, function (error, response, info) {
+                console.log('调用', i)               
                 next();
             })
-            
-        // } else if (message.Event === 'VIEW') {
-        //     var openid = message.FromUserName;
-        //     request('http://localhost:3001/userinfo?openid=' + openid, function (error, response, info) {
-        //         next();
-        //     })
 
         } else {
             res.reply({

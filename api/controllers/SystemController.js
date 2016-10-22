@@ -249,7 +249,6 @@ module.exports = {
                 var url = config.server + "/user/showUserDetail?account=" + userInfo.openid + "&nickName=" + userInfo.nickname;
                 console.log(url)
                 request.get(url, function(err, response, body) {
-                    console.log(err, response, body)
                     if (!err && response.statusCode == 200) {
                         var userinfo = {
                             projectData: JSON.parse(body).data,
