@@ -60,7 +60,7 @@
                 <br>
                 <% if (list[i].type == 'alert' && !list[i].isDone ){ %>
                 <div class="action-controller ">
-                    <a href="/updateStatus?taskNo=<%=list[i].taskNo%>&userAccount=<%=data.userAccount%>&projectUniqNo=<%=data.projectUniqNo%>&scheduleCount=<%=data.scheduleCount%>" class="btn btn-success updateType  col-xs-12 ">Accomplish</a>
+                    <a href="/updateStatus?taskNo=<%=list[i].taskNo%>&userAccount=<%=data.userAccount%>&projectUniqNo=<%=data.projectUniqNo%>&scheduleCount=<%=data.scheduleCount%>" class="btn btn-success updateType  col-xs-12 ">Complete</a>
                 </div>
                 <% } %>
                 <% if (list[i].type == 'question'){ %>
