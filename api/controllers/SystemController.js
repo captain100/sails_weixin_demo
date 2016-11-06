@@ -345,7 +345,7 @@ module.exports = {
         });
     },
 
-    //用户注册
+    // 用户注册
     registWechatUser: function(req, res) {
         var account = req.query.account,
             nickName = req.query.nickName,
@@ -356,10 +356,13 @@ module.exports = {
             type = req.query.type || 'weChat',
             profileUrl = req.query.profileUrl || '';
 
+        console.log('用户注册',req.query)
         request.get(config.server + '/user/createUser?account=' + account +
             '&nickName=' + nickName + '&realName=' + realName +
             '&phoneNum=' + phoneNum + '&sex=' + sex + '&type=1&profileUrl=' + profileUrl +
             '&level=' + level, function(err, response, data) {
+                console.log('注册用户返回')
+                console.log(err, response, data)
                 if (!err && response.statusCode == 200) {
                     res.render('userinfo', {
                         account: account,
