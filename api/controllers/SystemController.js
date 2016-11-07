@@ -289,8 +289,8 @@ module.exports = {
             } else if (result.projectData.status === 3) {
                 console.log('当前是个新用户要先创建再选择')
                 console.log(result.userInfo)
-                var url = 'http://23.106.156.140:3001/registWechatUser?account=' + result.userInfo.openid +
-                    '&nickName=' + result.userInfo.nickname +
+                var url = '/registWechatUser?account=' + result.userInfo.openid +
+                    '&nickName=' + encodeURIComponent(result.userInfo.nickname) +
                     '&sex=' + result.userInfo.sex +
                     '&profileUrl=' + result.userInfo.headimgurl
                 console.log(url)

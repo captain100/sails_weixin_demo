@@ -33,13 +33,13 @@ module.exports.routes = {
     'get /createTask':'SystemController.createTask',
     'get /schedule':'SystemController.getSchedule',
     'get /updateStatus':'SystemController.changeActionStatus',
-    //注册用户
-    'get /registWechatUser':'SystemController.registWechatUser',
     //wechatController
     'all /wechat':'WeChatController.wechat',
     'get /project':'SystemController.findAllProject',
     'get /createProject':'SystemController.createProject',
     'get /getActionList':'SystemController.getActionList',
+    //注册用户
+    '/registWechatUser':'SystemController.registWechatUser',
     //project
     '/insertProject':'ProjectController.insertProject',
     '/getProjectNo':'ProjectController.getProjectNo',
