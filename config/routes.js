@@ -33,6 +33,8 @@ module.exports.routes = {
     'get /createTask':'SystemController.createTask',
     'get /schedule':'SystemController.getSchedule',
     'get /updateStatus':'SystemController.changeActionStatus',
+    //注册用户
+    'get /registWechatUser':'SystemController.registWechatUser',
     //wechatController
     'all /wechat':'WeChatController.wechat',
     'get /project':'SystemController.findAllProject',
@@ -47,8 +49,6 @@ module.exports.routes = {
     '/updateWeixinMenu':'SystemController.updateWeixinMenu',
     //进入userinfo的界面
     '/showUserinfo':'SystemController.showUserinfo',
-    //注册用户
-    '/registWechatUser':'SystemController.registWechatUser',
     //参加project
     '/jionProject':'ProjectController.jionProject',
     //退出项目
