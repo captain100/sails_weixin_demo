@@ -377,7 +377,9 @@ module.exports = {
                         profileUrl: profileUrl,
                         projectUniqNo: null,
                         projectName: null,
-                        progressRate: null
+                        progressRate: null,
+                        projectList: [],
+
                     });
                 }
             });
