@@ -369,18 +369,37 @@ module.exports = {
                 console.log('注册用户返回')
                 console.log(err, response, data)
                 if (!err && response.statusCode == 200) {
-                    res.render('userinfo', {
-                        account: account,
-                        nickName: nickName,
-                        sex: sex,
-                        level: level,
-                        profileUrl: profileUrl,
-                        projectUniqNo: null,
-                        projectName: null,
-                        progressRate: null,
-                        projectList: [],
-
+                    request.get(config.server + '/admin/project/list', function(error, response, data) {
+                        if (!error && response.statusCode == 200) {
+                            data = JSON.parse(data);
+                            // console.log(data.data);
+                            return res.render('userinfo', {
+                                account: account,
+                                nickName: nickName,
+                                sex: sex,
+                                level: level,
+                                profileUrl: profileUrl,
+                                projectUniqNo: null,
+                                projectName: null,
+                                progressRate: null,
+                                projectList: data.data,
+                                userAllTaskList:[],
+                                isCancel:false
+                            });
+                        }
                     });
+
+                    // res.render('userinfo', {
+                    //     account: account,
+                    //     nickName: nickName,
+                    //     sex: sex,
+                    //     level: level,
+                    //     profileUrl: profileUrl,
+                    //     projectUniqNo: null,
+                    //     projectName: null,
+                    //     progressRate: null,
+                    //     projectList: [],
+                    // });
                 }
             });
 
