@@ -289,12 +289,14 @@ module.exports = {
             } else if (result.projectData.status === 3) {
                 console.log('当前是个新用户要先创建再选择')
                 console.log(result.userInfo)
-                
-                //当前是个新用户要先创建再选择
-                return res.redirect('/registWechatUser?account=' + result.userInfo.openid +
+                var url = '/registWechatUser?account=' + result.userInfo.openid +
                     '&nickName=' + result.userInfo.nickname +
                     '&sex=' + result.userInfo.sex +
-                    '&profileUrl=' + result.userInfo.headimgurl)
+                    '&profileUrl=' + result.userInfo.headimgurl
+                console.log(url)
+
+                //当前是个新用户要先创建再选择
+                return res.redirect(url)
             } else {
                 //已经选择project
                 console.log('已经选择project');
