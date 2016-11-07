@@ -38,13 +38,14 @@ module.exports = {
         request({ url: config.server + '/user/participateProject?projectNo=' + projectNo + '&account=' + account }, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 body = JSON.parse(body);
+                console.log(body)
                 if (body.ret) {
-                    var url = config.server + "/info/task/userAllTaskList?projectUniqNo=" + body.data + "&userAccount=" + account;
+                    var url = config.server + "/info/task/userAllTaskList?projectUniqNo=" + body.data.projectUniqNo + "&userAccount=" + account;
                     return request(url, function(error, response, result) {
                         if (!error && response.statusCode == 200) {
                             result = JSON.parse(result);
-                            // console.log(result)
-                            return res.json({ 'userAllTaskList': result.data.listCount });
+                            console.log(result)
+                            return res.json({ 'userAllTaskList': result.data.listCount, 'projectName': body.data.projectName});
                         }
                     })
                 }else{

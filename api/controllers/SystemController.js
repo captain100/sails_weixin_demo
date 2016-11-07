@@ -1,5 +1,6 @@
 var request = require('request');
 var async = require('async');
+var fs   = require('fs');
 var WechatAPI = require('wechat-api');
 var config = require('sails').config;
 var api = '';
@@ -9,26 +10,39 @@ var client = new OAuth('wxb4fb29266130bb85', '675f1cd7edfcaba17b987c44c83e0a6b')
 module.exports = {
     //访问网站首页
     showExpress: function(req, res) {
+        if (req.params.filename) {
+            fs.exists(req.params.filename, function(exists) {
+                if (exists) {
+                    fs.readFile(req.params.filename, 'binary', function(err, file) { 
+                        var contentType = "text/plain";
+                        res.writeHead(200, {
+                            'Content-Type': contentType,
+                            'Connection': 'keep-alive',
+                            'Transfer-Encoding': 'chunked'
+                        });
+                        res.write(file, "binary");
+                        res.end();
+                    })
+                }
+            })
+        }
+        else {
+            res.render('showPage');
 
-        console.log(req);
-        res.render('showPage');
+        }
     },
     //获取试卷数据信息
     heartqOl: function(req, res) {
-        // console.log(sails.config);
         request.get({ url: config.server + '/info/paper/getPaperContent?paperId=' + req.query.paperId + '&taskNo=' + req.query.taskNo + '&userAccount=' + req.query.userAccount }, function(err, response, body) {
-            console.log(body);
             body = JSON.parse(body);
-            console.log(body.data);
-            res.render('heartq_test', { data: body.data });
+            res.render('heartq_test', { data: body.data, scheduleCount: body.data.scheduleCount });
         })
     },
     //提交试卷数据
     submitQuestion: function(req, res) {
-        var data = req.query.data;
+        var data = req.body;
         var json = JSON.stringify(data);
         json = JSON.parse(json);
-        // console.log(json);
         var options = {
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +55,6 @@ module.exports = {
         };
         request(options, function(error, response, data) {
             if (!error && response.statusCode == 200) {
-                console.log('----info------', data);
                 res.json(200, { info: data });
             }
         });
@@ -181,7 +194,7 @@ module.exports = {
                 });
             }
         }, function(error, result) {
-            // console.log(result)
+            console.log(result)
 
             res.render('schedule', result);
         })
@@ -228,14 +241,13 @@ module.exports = {
                 });
             },
             function(openid, cb) {
-                console.log('openid==', openid);
                 client.getUser(openid, function(err, userInfo) {
-                    console.log('userInfo', userInfo);
                     return cb(err, userInfo);
                 });
             },
             function(userInfo, cb) {
                 var url = config.server + "/user/showUserDetail?account=" + userInfo.openid + "&nickName=" + userInfo.nickname;
+                console.log(url)
                 request.get(url, function(err, response, body) {
                     if (!err && response.statusCode == 200) {
                         var userinfo = {
@@ -248,8 +260,7 @@ module.exports = {
                 })
             }
         ], function(err, result) {
-            console.log(result)
-            
+            console.log(err, result)
             if (result.projectData.status === 1) {
                 //创建完没选projec
                 console.log('跳转倒选择projec');
@@ -276,11 +287,16 @@ module.exports = {
                 });
 
             } else if (result.projectData.status === 3) {
-                //当前是个新用户要先创建再选择
-                return res.redirect('/registWechatUser?account=' + result.userInfo.openid +
-                    '&nickName=' + result.userInfo.nickname +
+                console.log('当前是个新用户要先创建再选择')
+                console.log(result.userInfo)
+                var url = '/registWechatUser?account=' + result.userInfo.openid +
+                    '&nickName=' + encodeURIComponent(result.userInfo.nickname) +
                     '&sex=' + result.userInfo.sex +
-                    '&profileUrl=' + result.userInfo.headimgurl)
+                    '&profileUrl=' + result.userInfo.headimgurl
+                console.log(url)
+
+                //当前是个新用户要先创建再选择
+                return res.redirect(url)
             } else {
                 //已经选择project
                 console.log('已经选择project');
@@ -292,7 +308,6 @@ module.exports = {
                     return request(url, function(error, response, result) {
                         if (!error && response.statusCode == 200) {
                             result = JSON.parse(result);
-                            console.log(result)
                             // return res.json({ 'userAllTaskList': result.data.listCount });
                             return res.render('userinfo', {
                                     account: userInfo.openid,
@@ -320,7 +335,7 @@ module.exports = {
                 console.log(data.data);
                 return res.render('userinfo', {
                     account: 'oewo7wMrPRdkfCxLhkQ0qTTMyRME',
-                    nickName: 'fafa',
+                    nickName: 'qiushi',
                     sex: 1,
                     level: 10,
                     profileUrl: 'http://wx.qlogo.cn/mmopen/UAMuw0RfSYw9nDMRAB5owuPmyD9YmsuNYORtiaoIj1jRQWPK9mddibwRZUreR5KkS3JNn883SKQ1AVg4ueZf5ibVDicic3DJSj9Lb/0',
@@ -335,7 +350,7 @@ module.exports = {
         });
     },
 
-    //用户注册
+    // 用户注册
     registWechatUser: function(req, res) {
         var account = req.query.account,
             nickName = req.query.nickName,
@@ -346,31 +361,59 @@ module.exports = {
             type = req.query.type || 'weChat',
             profileUrl = req.query.profileUrl || '';
 
+        console.log('用户注册',req.query)
         request.get(config.server + '/user/createUser?account=' + account +
             '&nickName=' + nickName + '&realName=' + realName +
             '&phoneNum=' + phoneNum + '&sex=' + sex + '&type=1&profileUrl=' + profileUrl +
             '&level=' + level, function(err, response, data) {
+                console.log('注册用户返回')
+                console.log(err, response, data)
                 if (!err && response.statusCode == 200) {
-                    res.render('userinfo', {
-                        account: account,
-                        nickName: nickName,
-                        sex: sex,
-                        level: level,
-                        profileUrl: profileUrl,
-                        projectUniqNo: null,
-                        projectName: null,
-                        progressRate: null
+                    request.get(config.server + '/admin/project/list', function(error, response, data) {
+                        if (!error && response.statusCode == 200) {
+                            data = JSON.parse(data);
+                            // console.log(data.data);
+                            return res.render('userinfo', {
+                                account: account,
+                                nickName: nickName,
+                                sex: sex,
+                                level: level,
+                                profileUrl: profileUrl,
+                                projectUniqNo: null,
+                                projectName: null,
+                                progressRate: null,
+                                projectList: data.data,
+                                userAllTaskList:[],
+                                isCancel:false
+                            });
+                        }
                     });
+
+                    // res.render('userinfo', {
+                    //     account: account,
+                    //     nickName: nickName,
+                    //     sex: sex,
+                    //     level: level,
+                    //     profileUrl: profileUrl,
+                    //     projectUniqNo: null,
+                    //     projectName: null,
+                    //     progressRate: null,
+                    //     projectList: [],
+                    // });
                 }
             });
 
     },
-
+    aboutUs: function(req,res){
+        res.render('aboutus')
+    },
 
     //修改微信公众账号的菜单栏
     updateWeixinMenu: function(req, res) {
         var url = client.getAuthorizeURL('http://www.cpzero.cn/userinfo', 'STATE', 'snsapi_userinfo');
+        var aboutusUrl = client.getAuthorizeURL('http://www.cpzero.cn/aboutUs', 'STATE', 'snsapi_userinfo');
         // var url = client.getAuthorizeURL('http://gxqxv89xs6.proxy.qqbrowser.cc/userinfo', 'STATE', 'snsapi_userinfo');
+        // var aboutusUrl = client.getAuthorizeURL('http://gxqxv89xs6.proxy.qqbrowser.cc/aboutUs', 'STATE', 'snsapi_userinfo');
         console.log(url)
         api = new WechatAPI(config.APPID, config.APPSECRET);
         api.removeMenu(function(err, result) {
@@ -379,14 +422,20 @@ module.exports = {
                     "button": [
                         {
                             "type": "view",
-                            "name": "个人主页",
+                            "name": "Home Page",
                             "url": url
                         },
                         {
                             "type": "click",
-                            "name": "立刻生成任务",
-                            "key": "CREAT_TASK_1",
+                            "name": "Current Tasks",
+                            "key": "CREAT_TASK_1"
                         },
+                        {
+                            "type":'view',
+                            "name": "Contact us",
+                            "url": aboutusUrl
+                        }
+
                     ]
                 };
                 api.createMenu(menu, function(err, result) {

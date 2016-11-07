@@ -8,7 +8,6 @@ var wechat_config = {
 
 module.exports = function (req, res, next) {
     wechat(wechat_config, function (req, res, next) {
-        // console.log(11111111111);
         // 微信输入信息都在req.weixin上
         var message = req.weixin;
         // console.log(message);
@@ -17,20 +16,15 @@ module.exports = function (req, res, next) {
             res.reply('hehe');
 
         } else if (message.Event === 'CLICK' && message.EventKey === 'CREAT_TASK_1') {
+
             var openid = message.FromUserName;
-            request('http://www.cpzero.cn/createTask?openid=' + openid, function (error, response, info) {
-                next();
+            request('http://www.cpzero.cn/createTask?openid=' + openid, function (error, response, info) {          
             })
-            
-        // } else if (message.Event === 'VIEW') {
-        //     var openid = message.FromUserName;
-        //     request('http://localhost:3001/userinfo?openid=' + openid, function (error, response, info) {
-        //         next();
-        //     })
+            res.reply()
 
         } else {
             res.reply({
-                content: '欢迎你加入由XX公司提供的XX试验。在此之前请确认你是否已经在你的主治医师的指导下签署书面合同已经签署请\n否则请联系你的主治医师',
+                content: 'Welcome to WeHEOR. Please make sure that you have assigned the agreement under the instruction of your doctor. If not, please contact your doctor.',
                 type: 'text'
             });
         }

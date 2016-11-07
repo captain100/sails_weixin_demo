@@ -22,9 +22,8 @@
 
 module.exports.routes = {
     //SystemController
-    'all /': 'SystemController.showExpress',
     'get /heartqOl': 'SystemController.heartqOl',
-    'get /subPaper': 'SystemController.submitQuestion',
+    'post /subPaper': 'SystemController.submitQuestion',
     'get /admin': 'SystemController.showAdmin',
     'get /new':'SystemController.createQuestion', 
     'get /getQuestion':'SystemController.findQuestion',
@@ -39,6 +38,8 @@ module.exports.routes = {
     'get /project':'SystemController.findAllProject',
     'get /createProject':'SystemController.createProject',
     'get /getActionList':'SystemController.getActionList',
+    //注册用户
+    '/registWechatUser':'SystemController.registWechatUser',
     //project
     '/insertProject':'ProjectController.insertProject',
     '/getProjectNo':'ProjectController.getProjectNo',
@@ -48,15 +49,11 @@ module.exports.routes = {
     '/updateWeixinMenu':'SystemController.updateWeixinMenu',
     //进入userinfo的界面
     '/showUserinfo':'SystemController.showUserinfo',
-    //注册用户
-    '/registWechatUser':'SystemController.registWechatUser',
     //参加project
     '/jionProject':'ProjectController.jionProject',
     //退出项目
-    '/cancelProject':'ProjectController.cancelProject'
-
-   
-
-
-
+    '/cancelProject':'ProjectController.cancelProject',
+    // 联系我们
+    '/aboutUs':'SystemController.aboutUs',
+    'all /:filename?': 'SystemController.showExpress'
 };

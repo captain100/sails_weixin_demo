@@ -5,7 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>个人主页</title>
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/animate.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link href="stylesheets/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <title>Home Page</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <style>
         body {
@@ -25,6 +32,8 @@
             display: block;
             max-width: 420px;
             margin: auto;
+            padding: 0;
+
         }
         
         .header {
@@ -193,22 +202,6 @@
             font-size:15px ;
 
         }
-        .end{
-            text-align: center;
-            background: #EDEDED;
-            color: #CCC;
-            height: 40px;
-            line-height: 40px;
-        }
-        .outProject{
-            background: #000;
-            text-align: center;
-            font-size: 15px;
-            padding:5px;
-            color:#fff;
-            margin: auto
-
-        }
         .over{
             width: 100%;
             height: 60px;
@@ -217,115 +210,244 @@
             font-size: 20px;
             background: #fff;
             line-height: 60px;
-
-
+        }
+        .row{
+            margin:0;
+        }
+        .col-lg-12 {
+            padding: 0;
+        }
+        .hasSelectProject{
+            display: none;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="header">
-            <div class="zhezhao">
-                <div>
-                    <img class="authorIMG" src="<%= profileUrl %>" style="display:none" />
-                </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2><%= nickName %></h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <span class="projectNameStr"><%= projectUniqNo ? 'My project: ' + projectName : 'You have not particiapted any project. Please choose one from the following projects.' %><span>
+                    </li>
+                </ol>
             </div>
-            <div class="name">
-                <span><%= nickName %></span>
-                <%if(sex == 1){ %>
-                    <img class="authorIcon" src="/images/nan.png" alt="">
-
-                    <%} else {%>
-                        <img class="authorIcon" src="/images/nv.png" alt="">
-                        <% }%>
-            </div>
-            <div style="text-align: center; padding: 10px;">
-                <span>参加的项目: <%= projectUniqNo ? projectName : '你还未参加项目' %><span>
-            </div>
-
-            <!-- <div class="userInfoBox">
-                <span>项目进行度:<%= projectUniqNo ? progressRate : '20%' %> </span> ｜
-                <span>项目表现: 良好</span> ｜
-                <span>等级: <%= level %></span>
-            </div> -->
-            
-
         </div>
-        <div class="over">项目完成度<%= projectUniqNo ? progressRate : '0%' %></div>
-
-            <!--projectList -->
-        <div class="projectlist">
-            <% for( i= 0; i < projectList.length ;i++){ %>
-                <div class="touchDiv" onclick="">
-                    <div class="pro_item">
-                        <div>项目名称：
-                            <%=projectList[i].projectName%>
+        <div class="wrapper wrapper-content">
+            <!-- 没有加入项目 -->
+            <div class="row animated fadeInRight hasNoproject">
+                <% for( i= 0; i < projectList.length ;i++){ %>
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5><%=projectList[i].projectName%></h5>
+                            <div class="ibox-tools">
+                                <a data-toggle="collapse" data-target="#project<%=i%>" >
+                                    <i class="fa fa-chevron-down"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div>简介：</div>
-                        <a href="#" class="join_btn" onclick="joinProject('<%=account%>','<%=projectList[i].projectNo%>')">参加项目</a>
-                        <div class="pro_bottom_info">
-                            <span style="margin-left: 0px;">创建时间：2016-2-25</span>
-                            <span style="margin-right: 0px;">参加人数：100</span>
+                        <div id="project<%=i%>" class="collapse in">
+                            <div class="ibox-content profile-content">
+                                <h5><strong>Create Time</strong></h5>
+                                <p><%=projectList[i].createTime%></p>
+                                <h5>
+                                    <strong>Project Description</strong>
+                                </h5>
+                                <p>
+                                    <%=projectList[i].projectDesc%>
+                                </p>
+                                <div class="user-button">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <button type="button" class="btn btn-primary btn-sm btn-block isTure" data-account="<%=account%>" data-projectNo="<%=projectList[i].projectNo%>"> Join Project</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            <% } %>
-
-
-        </div>
-
-
-        <%if(userAllTaskList.length > 0 ) {%>
-            <%for(var i = 0 ; i< userAllTaskList.length ; i++){ %>
-
-                <div class="<%= userAllTaskList[i].scheduleCount%2 ? 'task-item-light' : 'task-item' %>" >
-                    <p>任务<%= i+1 %></p><p style="<%=userAllTaskList[i].done ? 'color:#1bbc9b':'color:#f5b963' %>"><%=userAllTaskList[i].done ? '已完成':'未完成' %></p>
-                    <%=userAllTaskList[i].chTitle%><br>
-
-                    <%-userAllTaskList[i].chDesc%><br>
-
-                </div>
-            <% }%>
-            <div class="end">结束了，没有任务了－_－
-            <div onclick="cancel('<%=account%>','<%=projectUniqNo%>')" class="outProject">退出项目</div>
+                <% } %>
             </div>
-        <% } %>
-        <div id="taskList"></div>
-        
+            <div class="row animated fadeInRight hasSelectProject">
+            </div>
+
+            <!-- 加入项目 -->
+
+            <div class="row animated fadeInRight">
+                <%if(userAllTaskList.length > 0 ) {%>
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h5>Project Completion Progress</h5>
+                                <h2><%=progressRate%></h2>
+                                <div class="progress progress-mini">
+                                    <div style="width: <%=progressRate%>" class="progress-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%for(var i = 0 ; i< userAllTaskList.length ; i++){ %>
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>Task <%= i+1 %></h5>
+                                    <div class="ibox-tools ">
+                                        <a class="pull-right" data-toggle="collapse" data-target="#demo<%=i%>">
+                                            <i class="fa fa-chevron-down"></i>
+                                        </a>
+                                        <%if(userAllTaskList[i].done){%>
+                                         <label class="label label-primary pull-right">Completed</label>
+                                        <% } else {%> 
+                                         <label class="label label-warning pull-right">Pending</label>
+                                        <%} %>
+                                    </div>
+                                </div>
+                                <div id="demo<%=i%>" class="collapse">
+                                    <div class="ibox-content profile-content">
+                                        <h5>
+                                            <%=userAllTaskList[i].chTitle%>
+                                        </h5>
+                                        <p>
+                                            <%-userAllTaskList[i].chDesc%>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }%>
+                    <div class="col-lg-12 ">
+                        <h5 class="text-center">
+                            No More Tasks
+                        </h5> 
+                        <button type="button" class="outProject btn btn-block btn-w-m btn-success" data-account="<%=account%>" data-projectUniqNo="<%=projectUniqNo%>">Quit Project</button>
+                    </div>
+                <% } %> 
+            </div>
+        </div>
     </div>
     
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <script>
-        function joinProject(account,projectNo){
-            $.get('/jionProject',{account:account,projectNo:projectNo},function(e){
-                 if(e.userAllTaskList && e.userAllTaskList.length > 0){
-                     alert('已参加project成功');  
-                     var projectlist = document.getElementsByClassName('projectlist');
-                     projectlist[0].style.display = 'none';
-                     var taskList = document.getElementById('taskList');
-                     e.userAllTaskList.map(function(item,key){
-                        var node = document.createElement('div');
-                        var _html = '';
-                        node.setAttribute('class','task-item-light')
-                        _html += '<p>任务'+ (key + 1) +'</p><p style="';
-                        _html += item.one ? "color:#1bbc9b;":"color:#f5b963;" 
-                        _html += '">' ;
-                        _html += item.done ? "已完成":"未完成";
-                        _html += '</p>'+ item.chTitle +'<br>'+ item.chDesc +'<br>';
-                        node.innerHTML = _html
-                        return  taskList.appendChild(node);
-                     })
+    <!-- Mainly scripts -->
+        <script src="js/jquery-2.1.1.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-                 }  
-             });
+        <!-- Flot -->
+        <script src="js/plugins/flot/jquery.flot.js"></script>
+        <script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+        <script src="js/plugins/flot/jquery.flot.spline.js"></script>
+        <script src="js/plugins/flot/jquery.flot.resize.js"></script>
+        <script src="js/plugins/flot/jquery.flot.pie.js"></script>
+        <script src="js/plugins/flot/jquery.flot.symbol.js"></script>
+        <script src="js/plugins/flot/curvedLines.js"></script>
+
+        <!-- Peity -->
+        <!-- <script src="js/plugins/peity/jquery.peity.min.js"></script> -->
+        <!-- <script src="js/demo/peity-demo.js"></script> -->
+
+        <!-- Custom and plugin javascript -->
+        <script src="js/inspinia.js"></script>
+        <script src="js/plugins/pace/pace.min.js"></script>
+
+        <!-- jQuery UI -->
+        <script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+        <!-- Jvectormap -->
+        <script src="js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+        <script src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+        <!-- Sparkline -->
+        <script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+        <!-- Sparkline demo data  -->
+        <script src="js/demo/sparkline-demo.js"></script>
+
+        <!-- Sweet alert -->
+        <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.isTure').click(function(){
+                var account = $(this).attr('data-account')  
+                var projectNo = $(this).attr('data-projectNo')
+                console.log(account, projectNo)
+                swal({
+                    title: "Are you sure?",
+                    text: "You can participate only one project at the same time.",
+                    showCancelButton: true,
+                    confirmButtonColor: "#AEDEF4",
+                    confirmButtonText: "yes",
+                    cancelButtonText:"no",
+                    closeOnConfirm: true
+                }, function(){
+                    return JoinProject(account, projectNo)
+                });
+            });
+
+            $('.outProject').click(function () {
+                var account = $(this).attr('data-account')
+                var projectUniqNo = $(this).attr('data-projectUniqNo') 
+                swal({
+                    title: "Are you sure?",
+                    showCancelButton: true,
+                    confirmButtonColor: "#AEDEF4",
+                    confirmButtonText: "yes",
+                    cancelButtonText:"no",
+                    closeOnConfirm: true
+                }, function(){
+                    return cancel(account, projectUniqNo)
+                })
+            })
+
+        })
+
+        function JoinProject(account,projectNo) {
+            $.get('/jionProject', {account:account,projectNo:projectNo}, function(e) {
+                if (e.userAllTaskList && e.userAllTaskList.length > 0) {
+                    $('.hasNoproject').hide()
+                    $('.hasSelectProject').show()
+                    $('.projectNameStr').text(e.projectName)
+                    e.userAllTaskList.map(function(item, key){
+                        var node = $('<div></div>')
+                        node.addClass('col-lg-12')
+                        var _html = ""
+                        _html += '<div class="ibox float-e-margins">'
+                        _html += '<div class="ibox-title">'
+                        _html += '<h5>Task' + (key+1) + '</h5>'
+                        _html += '<div class="ibox-tools">'
+                        _html += '<a class="pull-right" data-toggle="collapse" data-target="#new'+ key +'">'
+                        _html += '<i class="fa fa-chevron-down"></i>'
+                        _html += '</a>'
+                        _html += item.done ? '<label class="label label-primary pull-right">Completed</label>':'<label class="label label-warning pull-right">Pending</label>'
+                        _html += '</div>'
+                        _html += '</div>'
+                        _html += '<div id="new'+ key +'" class="collapse">'
+                        _html += '<div class="ibox-content profile-content">'
+                        _html += '<h5>'
+                        _html += item.chTitle
+                        _html += '</h5>'
+                        _html += '<p>'
+                        _html += item.chDesc
+                        _html += '</p>'
+                        _html += '</div>'
+                        _html += '</div>'
+                        var ibox = $(_html)
+                        ibox.appendTo(node)
+                        node.appendTo($('.hasSelectProject'))
+                    })
+                }
+            })
         }
 
         function cancel(account,projectNo){
             $.get('/cancelProject', {account: account, projectNo : projectNo}, function(e){
                 WeixinJSBridge.invoke('closeWindow');
             })
-
         }
     </script>
 </body>

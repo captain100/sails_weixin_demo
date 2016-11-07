@@ -3,6 +3,7 @@
  */
 $(function() {
     $('.sub_btn').click(function(){
+        var scheduleCount = $(this).attr('data-scheduleCount')
         var paperId = $('#paperId').val();
         var userAccount = $('#userAccount').val();
         var taskNo = $('#taskNo').val();
@@ -11,11 +12,10 @@ $(function() {
             var id = $('.radio_wrap')[i].getAttribute('data-questionid');
             var value = $('input:radio[name='+id+']:checked').val();
             var location = $('input:radio[name='+id+']:checked').attr('data-location');
-            var answer ={
+            var answer = {
+                "location": location,
                 "questionId": id,
                 "value": value,
-                "location": location
-
             };
             answers.push(answer);
         }
@@ -25,20 +25,19 @@ $(function() {
             'paperId':paperId,
             'answers':answers
         };
-        var flag = confirm('确认是否提交？');
-        console.log(flag);
+        var flag = confirm('Are you sure');
         if(flag){
-            $.get('/subPaper',{data:data},function(e){
-            // if(e){
-                
-                
-            // }
-            // console.log(e.info.data.userAccount);
-            window.location.href='http://www.cpzero.cn/schedule?userAccount='+e.info.data.userAccount+'&projectUniqNo='+e.info.data.projectUniqNo+'&scheduleCount=1';
-
-        })
-        }
-        
-
-    });
-});
+            $.ajax({
+                url: '/subPaper',
+                type: 'post',
+                data:data,
+                dataType: "json",
+                success: function(e){
+                    return window.location.href='http://www.cpzero.cn/schedule?userAccount='+e.info.data.userAccount+'&projectUniqNo='+e.info.data.projectUniqNo+'&scheduleCount='+scheduleCount;
+                },
+                error: function(e){
+                    return window.location.href='http://www.cpzero.cn/schedule?userAccount='+e.info.data.userAccount+'&projectUniqNo='+e.info.data.projectUniqNo+'&scheduleCount='+scheduleCount;
+                }
+            })            
+        }})
+})
